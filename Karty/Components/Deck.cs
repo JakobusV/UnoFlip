@@ -8,38 +8,38 @@ using UNO.Cards;
 namespace UNO
 {
     /// <summary>
-    /// Hrací balík. Metody balíčku jsou statické, protože nepředpokládám, že by ve hře existovalo
-    /// víc instancí hracího balíčku = hrací balíček je vždy jen jeden.
+    /// Translation - Game pack. The package methods are static because I don't expect there to be multiple instances
+    /// of the game package in the game = there is always only one game package.
     /// </summary>
     class Deck
     {
         /// <summary>
-        /// Červená barva. Globálně použitá pro všechny červené karty.
+        /// Translation - Red colour. Globally used for all red cards.
         /// </summary>
         public static Color red = Color.FromArgb(0, 57, 53);
 
         /// <summary>
-        /// Modrá barva. Globálně použitá pro všechny modré karty.
+        /// Translation - Blue color. Globally used for all blue cards.
         /// </summary>
         public static Color blue = Color.FromArgb(3, 151, 215);
 
         /// <summary>
-        /// Zelená barva. Globálně použitá pro všechny zelené karty.
+        /// Translation - Green color. Globally used for all green cards.
         /// </summary>
         public static Color green = Color.FromArgb(3, 167, 81);
 
         /// <summary>
-        /// Žlutá barva. Globálně použitá pro všechny žluté karty.
+        /// Translation - Yellow. Globally used for all yellow cards.
         /// </summary>
         public static Color yellow = Color.FromArgb(252, 223, 20);
 
         /// <summary>
-        /// Kolekce všech karet v balíčku.
+        /// Translation - A collection of all the cards in the deck.
         /// </summary>
         public static List<Card> cards = new List<Card>();
 
         /// <summary>
-        /// Zamíchá balíček - randomizuje pořadí karet v kolekci cards
+        /// Translation - Shuffles the deck - randomizes the order of the cards in the cards collection
         /// </summary>
         public static void Shuffle()
         {
@@ -47,132 +47,138 @@ namespace UNO
         }
 
         /// <summary>
-        /// Vytvoří nový hrací balíček - naplní kolekci cards kartamy (objekty typu Card) podle
-        /// pravidel karetní hry UNO.
+        /// Translation - Creates a new game deck - fills the cards collection 
+        /// with cards (Card objects) according to the rules of the UNO card game.
         /// </summary>
         public static void Create()
         {
-            // Resetuje kolekci karet, pokud předtím byla naplněná
+            // Translation - Resets the card collection if it was previously filled
             cards.Clear();
 
-            // Vytvoří novou instanci třídy Random.
+            // Translation - Creates a new instance of the Random class.
             Random r = new Random();
 
-            // Cyklus se zopakuje 108-krát. Podle pravidel by měl hrací balíček obsahovat
-            // přesně tolik karet.
+            // Translation - The cycle repeats 108 times.
+            // According to the rules, the deck should contain exactly that many cards.
             foreach (var i in Enumerable.Range(0, 108))
             {
-                // Pole všech možných barev, které může karta mít.
-                // Pomocné pole nám slouží k jednoduší generaci náhodných barev karet.
+                // Translation - An array of all the possible colors a card can have.
+                // The auxiliary field serves us to easily generate random card colors.
                 Color[] colors = { red, blue, green, yellow };
 
-                // Vytvoří instanci Karty a zvolí ji náhodnou barvu a číslo od 0 do 7.
+                // Translation - Creates a Card instance and chooses a random color and number from 0 to 7.
                 Card card = new Card(colors[r.Next(colors.Count())], r.Next(0, 7));
 
-                // Přiřadí kartě Z-Index. Tento index nám určuje, jak moc blízko po pomyslné ose Z se
-                // karta nachází směrem k pozorovateli (hráči / uživateli). Čím větší Z-Index je, tím blíže je karta
-                // k pozorovateli. Z-Index je důležitý pro to, abychom věděli, na jakou kartu uživatel klikl, pokud se nachází
-                // víc jednotlivých karet na sobě - jako v případě našeho hracího balíčku.
+                // Translation - Assigns a Z-Index to the card. This index tells us how close along the
+                // imaginary Z axis the card is towards the observer (player / user).
+                // The larger the Z-Index, the closer the card is to the observer.
+                // The Z-Index is important to know which card the user clicked on if there are multiple
+                // individual cards on top of each other - like in our game deck.
                 card.ZIndex = i;
 
-                // Otočí všechny karty v balíčku bříškem dolů. Boolovský parametr metody zajistí, že se neprovede nechtěná animace,
-                // která by byla vidět na startu hry.
+                // Translation - Turns all cards in the deck face down.
+                // The boolean parameter of the method ensures that the unwanted animation
+                // that would be seen at the start of the game is not performed.
                 card.Flip(true);
 
-                // Nastaví rotaci karty od -180 do 180. Pouze vizuální efekt a detail, který nemá na funkčnost hry vliv.
+                // Translation - Sets the rotation of the card from -180 to 180. Only a visual effect
+                // and a detail that does not affect the functionality of the game.
                 card.Rotation = r.Next(-180, 180);
 
-                // Nakonec přidáme naší kartičku do kolekce všech karet v balíku.
+                // Translation - Finally, we add our card to the collection of all cards in the pack.
                 cards.Add(card);
             }
         }
 
         /// <summary>
-        /// Umístí balíček na správnou pozici v hracím okně. Metoda je volána vždy, pokud dojde k změně velikosti okna
-        /// a tudíš i potřebě přesunout balíček tak, aby byl vždy na správné pozici kousek od středu.
+        /// Translation - Places the deck in the correct position in the game window. 
+        /// The method is called whenever there is a change in the size of the window and thus the need
+        /// to move the package so that it is always in the correct position a little from the center.
         /// </summary>
         public static void Align(Form f)
         {
-            // Projde všechny kartičky v našem hracím balíčku. Chceme totiž
-            // aktualizovat pozici každé kartičky v balíčku.
+            // Translation - Go through all the cards in our deck.
+            // We want to update the position of each card in the deck.
             foreach (Card card in cards)
             {
-                // Aktualizuje pozici kartičky tak, aby byla vždy kousek od středu.
+                // Translation - Updates the position of the card so that it is always close to the center.
                 card.Position = card.TargetPosition = new Point(f.ClientRectangle.Width / 2 - card.Dimensions.Width / 2 - 170, f.ClientRectangle.Height / 2 - card.Dimensions.Height / 2);
             }
         }
 
         /// <summary>
-        /// Update metoda hracího balíčku. Zajistí, že bude zavolána Update metoda
-        /// každé kartičky v balíčku.
+        /// Translation - Update method of the game package.
+        /// Ensures that the Update method of each card in the deck is called.
         /// </summary>
         public static void Update()
         {
-            // Projde všechny kartičky v našem hracím balíčku.
+            // Translation - It goes through all the cards in our game deck.
             foreach (Card card in cards)
             {
-                // Zavolá update metodu právě procházené kartičky.
+                // Translation - Calls the update method of the currently browsed card.
                 card.Update();
             }
         }
 
         /// <summary>
-        /// Vykreslovací metoda balíčku. Zajsití, že náš balíček se vykreslí na hrací obrazovku.
+        /// Translation - Package rendering method. Ensures that your deck is rendered on the game screen.
         /// </summary>
         public static void Draw(Graphics g)
         {
-            // Projde vždy posledních 5 a méně karet v balíčku. Vykreslujeme zde pouze 5 a méně kartiček z důvodu výkonnostních
-            // limitací Windows Forms. Ty jak známo nejsou graficky akcelerované a tudíš k vykreslovaní nepoužívají grafickou kartu,
-            // nýbrž pouze procesor.
+            // Translation - It always passes the last 5 or less cards in the deck.
+            // We only render 5 or fewer cards here due to performance limitations of Windows Forms.
+            // As you know, they are not graphically accelerated and therefore do not use a graphics card for rendering, but only a processor.
             for (int i = cards.Count - ((cards.Count - 5 > 5) ? 5 : cards.Count); i < cards.Count; i++)
             {
-                // Zavolá Draw metodu právě procházené kartičky = vykreslí kartičku.
+                // Translation - It calls the Draw method of the currently browsed card = renders the card.
                 cards[i].Draw(g);
             }
         }
 
         /// <summary>
-        /// Klik metoda balíčku. Řeší, co se stane, když uživatel klikne na balíček.
+        /// Translation - Click package method. Handles what happens when the user clicks on the package.
         /// </summary>
         public static void Click(Form f)
         {
-            // Kolekce karet, na které uživatel kliknul. Pamatujeme si, že uživatel může kliknout na více karet současně
-            // z důvodu jejich překrývání.
+            // Translation - A collection of cards that the user has clicked on.
+            // We remember that the user can click on multiple tabs at the same time due to their overlap.
             List<Card> clickedCards = new List<Card>();
 
-            // Iterujeme celou kolekcí po zpátku z důvodu, abychom mohli za běhu modifikovat prvky kolekce, které procházíme.
+            // Translation - We iterate through the entire collection backwards for the reason that
+            // we can modify the elements of the collection we are traversing on the fly.
             for (int i = cards.Count - 1; i >= 0; i--)
             {
-                // Získá instanci karty, kterou právě procházíme - pomocná proměnná.
+                // Translation - Gets the instance of the card we are currently browsing - a helper variable.
                 Card card = cards[i];
 
-                // Získá pozici myší.
+                // Translation - Gets the mouse position.
                 Point p = f.PointToClient(Cursor.Position);
 
-                // Oblast karty (rectangle / obdélník) - opět pomocná proměnná
+                // Translation - Card area (rectangle) - again auxiliary variable
                 Rectangle bounds = new Rectangle(card.Position.X, card.Position.Y, card.Dimensions.Width, card.Dimensions.Height);
 
-                // Zjistí, jestli oblast karty obsahuje myš. Jelikož se nacházíme v Click eventu,
-                // znamenalo by to, že uživatel na kartu klikl.
+                // Translation - Checks if the tab area contains a mouse.
+                // Since we are in the Click event, this would mean that the user clicked on the tab.
                 if (bounds.Contains(p))
                 {
-                    // Uživatel skutečně klikl na právě procházenou kartu. Přidáme ji proto do kolekce kliknutých karet.
+                    // Translation - The user actually clicked on the currently browsed tab.
+                    // We will therefore add it to the collection of clicked cards.
                     clickedCards.Add(card);
                 }
             }
 
-            // Zjistí, jestlu živatel vůbec klikl na nějakou kartu. Pokud je kolekce prázná, na žádnou neklikl
-            // a můžeme tedy vyskočit z klik eventu.
+            // Translation - It detects if the user has clicked on any tab at all.
+            // If the collection is empty, none has been clicked and we can jump out of the click event.
             if (clickedCards.Count == 0)
                 return;
 
-            // Kolekce není prázdná, tudíž je zde alespoň jedna a více karet, na které
-            // bylo kliknuto.
-            // Seřadí kolekci kliknutých karet sestupně a u první karty z takto seřazené kolekce zavolá Click metodu.
-            // Toto provádíme, abychom aktivovali klik jen u karty, která byla na vršku všech ostatních (to znamená nejblíže uživateli)
+            // Translation - The collection is not empty, so there is at least one or more cards that have been clicked.
+            // Sorts the collection of clicked cards in descending order and calls the Click method on the
+            // first card from the sorted collection. We do this to activate the click only for the card
+            // that was on top of all the others (that is, closest to the user)
             clickedCards.OrderByDescending(item => item.ZIndex).First().MouseClick();
 
-            // Nakonec vyčístíme kolekci nakliklých karet, aby byla připravená pro další kliknutí.
+            // Translation - Finally, we clean up the collection of clicked cards so that it is ready for the next click.
             clickedCards.Clear();
         }
     }

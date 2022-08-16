@@ -8,7 +8,7 @@ using UNO;
 namespace UNO
 {
     /// <summary>
-    /// Havní třída programu
+    /// Translation - Dirty program classs
     /// </summary>
     public partial class Game : Form
     {

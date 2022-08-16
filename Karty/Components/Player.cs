@@ -10,250 +10,252 @@ using UNO.Components;
 namespace UNO
 {
     /// <summary>
-    /// Třída hráč. Obstarává jeho karty v ruce, řeší jeho události jako je kliknutí myší a tak dále
+    /// Translation - Player class. It procures his cards in hand, handles his events like mouse clicks and so on
     /// </summary>
     class Player
     {
         /// <summary>
-        /// Kolekce kartiček, které má hráč v ruce
+        /// Translation - A collection of cards in a player's hand
         /// </summary>
         public static List<Card> hand = new List<Card>();
 
         /// <summary>
-        /// Pravda, pokud je uživatel na řadě a může hrát
+        /// Translation - True if it is the user's turn and can play
         /// </summary>
         public static bool canPlay = true;
 
         /// <summary>
-        /// Update metoda hráče
+        /// Translation - Update player method
         /// </summary>
         public static void Update()
         {
-            // Projde všechny karty v ruce
+            // Translation - He goes through all the cards in his hand
             foreach (Card card in hand)
             {
-                // Může uživatel hrát?
+                // Translation - Can the user play?
                 if (canPlay)
                 {
-                    // Je na hromádce nějaká zahraná karta?
+                    // Translation - Is there a played card on the pile?
                     if (Pile.cards.Count > 0)
                     {
-                        // Vrchní karta hromádky
+                        // Translation - The top card of the pile
                         Card pileTop = Pile.cards.Last();
 
-                        // Může být karta zahrána?
+                        // Translation - Can the card be played?
                         if (Helper.CompareCards(card, pileTop))
                         {
-                            // Karta je hratelná
+                            // Translation - The card is playable
                             card.Playable = true;
                         }
                         else
                         {
-                            // Kartu nyní nelze zahrát
+                            // Translation - The card cannot be played now
                             card.Playable = false;
                         }
                     }
                     else
                     {
-                        // Na hromádce není žádná zahraná karta. Pravděpodobně právě začla hra a tudíž můžeme zahrát jakoukoliv kartu.
+                        // Translation - There is no played card on the pile. The game has probably just started, so we can play any card.
                         card.Playable = true;
                     }
                 }
                 else
                 {
-                    // Uživatel nemůže hrát - vypne rámeček hratelnosti
+                    // Translation - User can't play - turns off the gameplay frame
                     card.Playable = false;
                 }
 
-                // Nakonec zavoláme vlastní update právě procházené karty
+                // Translation - Finally, we call our own update of the currently browsed card
                 card.Update();
             }
 
-            // Počet karet, které můžeme zahrát
+            // Translation - Number of cards we can play
             int playable = 0;
 
-            // Projde všechny karty v ruce
+            // Translation - He goes through all the cards in his hand
             foreach (Card card in hand)
             {
-                // Můžeme kartu zahrát?
+                // Translation - Can we play the card?
                 if (card.Playable)
-                    // Ano - navýšíme celkový počet hratelných karet
+                    // Translation - Yes - we will increase the total number of playable cards
                     playable++;
             }
 
-            // Je uživatel na řadě?
+            // Translation - Is it the user's turn?
             if (canPlay)
             {
-                // Pomocná proměnná - vrchní karta hracího balíčku
+                // Translation - Auxiliary variable - the top card of the playing deck
                 Card top = Deck.cards.Last();
 
-                // Pokud nemůžeme zahrát žádnou kartu
+                // Translation - If we cannot play any card
                 if (playable == 0)
                 {
-                    // Nemáme co zahrát
-                    // Zvýrazníme vrchní kartu hracího balíčku
+                    // Translation - We have nothing to play
+                    // We will highlight the top card of the playing deck
                     top.Playable = true;
                 }
                 else
                 {
-                    // Máme co zahrát
-                    // Není důvod zvýrazňovat vrchní kartu hracího balíčku
+                    // Translation - We have something to play
+                    // There is no reason to emphasize the top card of the playing deck
                     top.Playable = false;
                 }
 
-                // Updatujeme vrchní kartu
+                // Translation - We are updating the top tab
                 top.Update();
             }
         }
 
         /// <summary>
-        /// Vykreslí hráčovu ruku
+        /// Translation - Renders the player's hand
         /// </summary>
         public static void Draw(Form f, Graphics g)
         {
-            // Projde všechny karty v ruce
+            // Translation - He goes through all the cards in his hand
             for (int i = 0; i < hand.Count; i++)
             {
-                // Získá právě procházenou kartu - pomocná proměnná
+                // Translation - Gets the currently browsed tab - helper variable
                 Card card = hand[i];
 
-                // Nastaví Z-Index
+                // Translation - Sets the Z-Index
                 card.ZIndex = i;
 
-                // Nakonec kartu vykreslíme - zavoláme její draw metodu
+                // Translation - Finally, we draw the card - we call its draw method
                 card.Draw(g);
             }
         }
 
         /// <summary>
-        /// Zarovná hráčovu ruku
+        /// Translation - Aligns the player's hand
         /// </summary>
         public static void AlignHand(Form f)
         {
-            // Celková šířka všech karet v ruce
+            // Translation - Total width of all cards in hand
             int handWidth = 0;
 
-            // Offset (odsazení) jednotlivých kartiček. Zkrátka o jak velký kus se budou jednotlivé kartičky překrývat.
-            // Odsazení roste s přibývajícím počtem karet v ruce, aby se jich na obrazovku vešlo co nejvíce (počet je omezen defaultně na 20)
+            // Translation - Offset of individual cards. In short, by how big a piece will the individual cards overlap.
+            // The offset increases with the increasing number of cards in the hand to fit as many as
+            // possible on the screen (the number is limited to 20 by default)
             int xOffset = - (hand.Count * 7);
 
-            // Spočítá celkovou šířku karet v ruce včetně odsazení
-            // Projde všechny karty v ruce
+            // Translation - Calculates the total width of the cards in the hand including offsets
+            // Go through all the cards in the hand
             foreach (Card card in hand)
             {
-                // Inkrementuje celkovu šířku ruky o šířku právě procházené kartičky.
+                // Translation - Increments the total width of the hand by the width of the currently scrolled card.
                 handWidth += card.Dimensions.Width + xOffset;
             }
 
-            // Startovní pozice první karty v ruce
-            // Ta zajistí, že kartičky budou vždy pěkně na středu
+            // Translation - The starting position of the first card in the hand
+            // This ensures that the cards are always nicely centered
             int start = (f.ClientRectangle.Width / 2) - (handWidth / 2) + (xOffset / 2);
 
-            // Vykreslí ruku nepřítele
+            // Translaiton - Renders the enemy's hand
             for (int i = 0; i < hand.Count; i++)
             {
-                // Nastaví cílovou pozici karty na nově aktualizovanou polohu založenou na předešlých výpočtech
-                // Cílová pozice se od té skutečné liší tak, že se skutečná pozice mění do té doby, dokud se nerovná té cílové.
-                // Zkrátka cílová pozice je ta, kde by kartička měla být a ta skutečná ta, kde se fyzicky karta nachází.
-                // Díky tomuto systému jsou dosaženy animace pohybu karet.
+                // Translation - Sets the target position of the card to a newly updated position based on previous calculations
+                // The target position differs from the actual position by changing the actual position until it equals the target position.
+                // In short, the target position is where the card should be and the actual position is where the card is physically located.
+                // Thanks to this system, card movement animations are achieved.
                 hand[i].TargetPosition = new Point(start + ((hand[i].Dimensions.Width + xOffset) * i), f.ClientRectangle.Height - hand[i].Dimensions.Height - 20);
             }
         }
 
         /// <summary>
-        /// Lízací metoda hráče. Nejedná se o vykreslovací metodu, ale pouze o kolizi názvů mezi anglickými slovy líznout
-        /// a vykreslit. Metoda jako parametr přijímá intové číslo, které představuje počet karet, které si má hráč líznout.
+        /// Translation - The player's lick method.
+        /// This is not a rendering method, but merely a name collision between the English words lick and render. 
+        /// The method accepts as a parameter an int number that represents the number of cards to be drawn by the player.
         /// </summary>
         public static async void Draw(int count)
         {
-            // Zopakuje X-krát kde X je počet lízaných karet (count)
+            // Translation - Repeats X times where X is the number of cards licked (count)
             foreach (var i in Enumerable.Range(0, count))
             {
-                // Zkontrolujeme, jestli v balíčku zbyla nějaká karta
+                // Translation - We check if there are any cards left in the deck
                 if (Deck.cards.Count == 0)
                     Deck.Create();
 
-                // Zkontrolujeme, jestli má hráč pořád méně, než maximálních 20 karet na ruce
+                // Translation - We check if the player still has less than the maximum 20 cards in his hand
                 if (hand.Count == 20)
                     return;
 
-                // Vrchní karta z hracího balíčku
+                // Translation - The top card from the playing deck
                 Card top = Deck.cards[Deck.cards.Count - 1];
 
-                // Odstraní vrchní kartu z balíčku (protože si jí líznul hráč)
+                // Translation - Removes the top card from the deck (because the player drew it)
                 Deck.cards.Remove(top);
 
-                // Odstraní rotaci karty
+                // Translation - Removes card rotation
                 top.Settle(0);
 
-                // Otočí kartu bříškem nahoru, abychom ji viděli
+                // Translation - He turns the card face up for us to see
                 top.Flip();
 
-                // Spustí animaci čísla karty
+                // Translation - Starts the card number animation
                 top.Zoom();
 
-                // Přidá kartičku do naší ruky
+                // Translation - Adds a card to our hand
                 hand.Add(top);
 
-                // Aktualizuje layout a pošle všechny kartičky tam, kam patří
+                // Translation - Updates the layout and sends all the cards to where they belong
                 Game.container.RefreshLayout();
 
-                // Přidá malé spoždění, abychom kartičky nenalízli všechny naráz
+                // Translation - Adds a small delay so we don't find all the cards at once
                 await Task.Delay(350);
             }
         }
 
         /// <summary>
-        /// Řeší uživatelovi (hráčovi) klik akce (události)
+        /// Translation - Handles user (player) clique actions (events)
         /// </summary>
         public static void Click(Form f)
         {
-            // Stejný postup jako klik event u třídy balíčku (Deck.cs) - podrobněji rozepsáno tam
-            // Kolekce karet, na které bylo kliknuto - zatím jen její založení
+            // The same procedure as the click event for the package class (Deck.cs) - described in more detail there
+            // A collection of cards that have been clicked on - just setting it up so far
             List<Card> clickedCards = new List<Card>();
 
-            // Projde všechny karty v ruce
+            // Translation - He goes through all the cards in his hand
             foreach (Card card in hand)
             {
-                // Získá pozici myši
+                // Translation - Gets the mouse position
                 Point p = f.PointToClient(Cursor.Position);
 
                 // Cards bounds
                 Rectangle bounds = new Rectangle(card.Position.X, card.Position.Y, card.Dimensions.Width, card.Dimensions.Height);
 
-                // Klikl uživatel na právě procházenou kartu?
+                // Translation - Did the user click on the currently browsed tab?
                 if (bounds.Contains(p))
                 {
-                    // Přidá kartu do kolekce
+                    // Translation - Adds a card to the collection
                     clickedCards.Add(card);
                 }
             }
 
-            // Klikli jsme na nějakou kartu?
+            // Translation - Did we click on any tab?
             if (clickedCards.Count == 0)
-                // Ne - můžeme se vklídku vrátit
+                // Translation - No - we can go back in no time
                 return;
 
-            // Spustí klik metodu karty nejblíže k uživateli
+            // Translation - Triggers the click method of the card closest to the user
             clickedCards.OrderByDescending(item => item.ZIndex).First().MouseClick();
 
-            // Vyresetuje kolekci nakliklých karet pro další použití při dalším klik eventu
+            // Translation - Resets the collection of clicked cards for further use at the next click event
             clickedCards.Clear();
         }
 
-        // Odehrávací metoda hráče.
+        // Translation - The player's playing method.
         public static void Play()
         {
-            // Umožní hráči hrát
+            // Translation - It will allow players to play
             canPlay = true;
         }
 
         /// <summary>
-        /// Ukončí hráčovo kolo
+        /// Translation - Ends the player's turn
         /// </summary>
         public static void End()
         {
-            // Ukončí své kolo
+            // Translation - He ends his turn
             canPlay = false;
         }
     }
