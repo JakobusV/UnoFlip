@@ -10,60 +10,60 @@ using System.Drawing;
 namespace UNO
 {
     /// <summary>
-    /// Hromádka naposled zahraných karet.
+    /// T - The pile of last played cards.
     /// </summary>
     class Pile
     {
         /// <summary>
-        /// Kolekce naposled zahraných karet.
+        /// T - Collection of last played cards.
         /// </summary>
         public static List<Card> cards = new List<Card>();
 
         /// <summary>
-        /// Vytvoří novou hromádku.
+        /// T - Creates a new stack.
         /// </summary>
         public static void Create()
         {
         }
 
         /// <summary>
-        /// Zarovná hromádku karet na svou správnou pozici.
+        /// T- Aligns the stack of cards to its correct position.
         /// </summary>
         public static void Align(Form f)
         {
-            // Instance třídy Random
+            // T -An instance of the Random class
             Random r = new Random();
 
-            // Projde všechny karty na hromádce
+            //T - It goes through all the cards in the pile
             foreach (Card card in cards)
             {
-                // Nastaví jejich pozici na správné místo kousek od středu
+                // T - It will set their position to the correct place just off the center
                 card.TargetPosition = new Point(f.ClientRectangle.Width / 2 - card.Dimensions.Width / 2 + 170, f.ClientRectangle.Height / 2 - card.Dimensions.Height / 2);
             }
         }
 
         /// <summary>
-        /// Update hromádky naposled zahraných karet.
+        /// T - Update stacks of last played cards.
         /// </summary>
         public static void Update()
         {
-            // Projde všechny kartičky
+            // T- It goes through all the cards
             foreach (Card card in cards)
             {
-                // Aktualzuje právě procházenou kartičku
+                // T - Updates the currently browsed card
                 card.Update();
             }
         }
 
         /// <summary>
-        /// Vykreslí hromádku
+        /// T - Draws a stack
         /// </summary>
         public static void Draw(Graphics g)
         {
-            // Z výkonostních důvodů vykreslí pouze 4 a méně karet.
+            // T - For performance reasons, it will only render 4 or fewer cards.
             for (int i = cards.Count - ((cards.Count - 4 > 4) ? 4 : cards.Count); i < cards.Count; i++)
             {
-                // Vykreslí právě procházenou kartičku - zavolá její draw mwtodu.
+                // T - Draws the currently browsed card - calls its draw mwtod.
                 cards[i].Draw(g);
             }
         }

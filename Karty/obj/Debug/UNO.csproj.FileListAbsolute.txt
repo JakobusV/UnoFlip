@@ -29,3 +29,14 @@ C:\Users\javanderniet\Documents\GitHub\UnoFlip\Karty\obj\Debug\UNO.csproj.Genera
 C:\Users\javanderniet\Documents\GitHub\UnoFlip\Karty\obj\Debug\UNO.csproj.CoreCompileInputs.cache
 C:\Users\javanderniet\Documents\GitHub\UnoFlip\Karty\obj\Debug\Karty.exe
 C:\Users\javanderniet\Documents\GitHub\UnoFlip\Karty\obj\Debug\Karty.pdb
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\bin\Debug\Karty.exe.config
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\bin\Debug\Karty.exe
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\bin\Debug\Karty.pdb
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\obj\Debug\UNO.csproj.AssemblyReference.cache
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\obj\Debug\UNO.csproj.SuggestedBindingRedirects.cache
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\obj\Debug\UNO.Game.resources
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\obj\Debug\Karty.Properties.Resources.resources
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\obj\Debug\UNO.csproj.GenerateResource.cache
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\obj\Debug\UNO.csproj.CoreCompileInputs.cache
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\obj\Debug\Karty.exe
+C:\Users\Justin\Source\Repos\UnoFlip\Karty\obj\Debug\Karty.pdb
