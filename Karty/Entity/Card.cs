@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 namespace UNO.Cards
 {
     /// <summary>
-    /// Stav karty.
-    /// Normal - karta je klasicky viditelná
-    /// Back - karta je otočená břískem dolů (vidíme pouze zadní stranu)
+    /// Card status.
+    /// Normal - the card is classically visible
+    /// Back - the card is turned face down(only the back is visible)
     /// </summary>
+
+
     public enum State
     {
         Normal,
@@ -18,8 +20,8 @@ namespace UNO.Cards
     }
 
     /// <summary>
-    /// Možné typy karet
-    /// Classic - klasická karta s barvou a číslem
+    /// Possible card types
+    /// Classic - a classic card with color and number
     /// </summary>
     public enum Type
     {
@@ -27,189 +29,189 @@ namespace UNO.Cards
     }
 
     /// <summary>
-    /// Třída karty
+    /// Card class
     /// </summary>
     public class Card
     {
         /// <summary>
-        /// Stav karty
+        /// Card status
         /// </summary>
         public State State { get; set; }
 
         /// <summary>
-        /// Typ karty
+        /// Card type
         /// </summary>
         public Type Type { get; set; }
 
         /// <summary>
-        /// Barva karty
+        /// Card color
         /// </summary>
         public Color Color { get; set; }
 
         /// <summary>
-        /// Číslo karty
+        /// Card Number
         /// </summary>
         public int Number { get; set; }
 
         /// <summary>
-        /// Skutečná pozice karty
+        /// Actual card position
         /// </summary>
         public Point Position { get; set; }
 
         /// <summary>
-        /// Z index karty - čím větší, tím blíže po ose Z k uživateli
+        /// Z index of the card - the larger, the closer along the Z axis to the user
         /// </summary>
         public int ZIndex { get; set; }
 
         /// <summary>
-        /// Cílová pozice karty
+        /// Card target position
         /// </summary>
         public Point TargetPosition { get; set; }
 
         /// <summary>
-        /// Rozměry karty
+        /// Card dimensions
         /// </summary>
         public Size Dimensions { get; set; }
 
         /// <summary>
-        /// Rotace karty
+        /// Card rotation
         /// </summary>
         public float Rotation { get; set; }
 
         /// <summary>
-        /// Můžeme kartu zahrát? - Rámeček hratelnosti
+        /// Can we play the card? - Gameplay framework
         /// </summary>
         public bool Playable { get; set; }
 
         /// <summary>
-        /// Pravda, pokud je karta bříškem dolů
+        /// True if the card is face down
         /// </summary>
         public bool Flipped { get; set; }
 
         /// <summary>
-        /// Pravda, pokud by se karta měla otočit bříškem dolů - řídí animaci
+        /// True, if the card should be turned face down - it controls the animation
         /// </summary>
         private bool flipDown = false;
 
         /// <summary>
-        /// Pravda, pokud by se karta měla otočit bříškem nahoru - řídí animaci
+        /// True, if the card should turn face up - it controls the animation
         /// </summary>
         private bool flipUp = false;
 
         /// <summary>
-        /// Scale karty po ose X
+        /// Scale cards along the X-axis
         /// </summary>
         private float flipX = 1;
 
         /// <summary>
-        /// Pravda, pokud by měla kartička vynulovat svou rotaci
+        /// True if the card should reset its spin
         /// </summary>
         private bool settleRotation = false;
 
         /// <summary>
-        /// Rychlost animací
+        /// Animation speed
         /// </summary>
         private int speed = 25;
 
         /// <summary>
-        /// Pravda, pokud by se měla spustit animace zvětšední a zmenšení čísla
+        /// True if the number zoom animation should run
         /// </summary>
         private bool zoom = false;
 
         /// <summary>
-        /// Maximum zvětšení
+        /// Maximum magnification
         /// </summary>
         private int zoomMaximum = 30;
 
         /// <summary>
-        /// Přírůstek velikosti fontu po zvětšení
+        /// Font size increment after scaling
         /// </summary>
         private int zoomScale = -20;
 
         /// <summary>
-        /// Cílový úhel
+        /// Target angle
         /// </summary>
         private int targetAngle = 0;
 
         /// <summary>
-        /// Konstruktor
+        /// Constructor
         /// </summary>
         public Card(Color color, int number)
         {
-            // Inicializuje počáteční vnitřní stav objektu 
+            // Initializes the initial internal state of the object 
             Color = color;
             Number = number;
 
-            // Definuje standardní rozměry karty
+            // Defines standard card dimensions
             Dimensions = new Size(200, 250);
 
-            // Defautlní stav
+            // Default status
             State = State.Normal;
 
-            // Defautlní typ
+            // Default type
             Type = Type.Classic;
         }
 
         /// <summary>
-        /// Update metoda kartičky
+        /// Update card method
         /// </summary>
         public void Update()
         {
-            // Má karta být otočena bříškem dolů?
+            // Should the card be face down?
             if (flipDown)
             {
-                // Ještě stále není plně otočená?
+                // Still not fully turned?
                 if (flipX > -1)
                 {
-                    // Otočíme jí zas o něco víc
+                    // Let's turn it a little more
                     flipX -= 0.1f;
 
-                    // Překročila akrtička mrtvý úhel viditelnosti? = je k nám úplně kolmo ? 
+                    // Has the arrow crossed the blind spot? = is it completely perpendicular to us?
                     if (flipX < 0)
                     {
-                        // Otočí kartičku bříškem dolů
+                        // He turns the card face down
                         State = State.Back;
                     }
                 }
                 else
                 {
-                    // Otočení dokončeno
+                    // Rotation completed
                     flipDown = false;
 
-                    // Aktualizuje stav otočení
+                    // Updates the rotation state
                     Flipped = true;
                 }
             }
 
-            // Má karta být otočena bříškem nahoru?
+            // Should the card be turned face up?
             if (flipUp)
             {
-                // Ještě stále není plně otočená?
+                // Still not fully turned?
                 if (flipX < 1)
                 {
-                    // Otočíme jí zas o něco víc
+                    // Let's turn it a little more
                     flipX += 0.1f;
 
-                    // Překročila akrtička mrtvý úhel viditelnosti? = je k nám úplně kolmo ? 
+                    // Has the arrow crossed the blind spot? = is it completely perpendicular to us?
                     if (flipX > 0)
                     {
-                        // Otočí kartičku bříškem nahoru
+                        // He turns the card face up
                         State = State.Normal;
                     }
                 }
                 else
                 {
-                    // Otočení dokončeno
+                    // Rotation completed
                     flipUp = false;
 
-                    // Aktualizuje stav otočení
+                    // Updates the rotation state
                     Flipped = false;
                 }
             }
 
-            // Aktualizuje pozici karty. Pokud se skutečná pozice nerovná té cílové, posune se skutečná pozice zas o něco
-            // blíž té cílové - nejdříve o rychlost animace a poté, když je kartička už hodně blízko, pouze po pixelu aby došlo
-            // k perfektní shodě obou pozic. Opakuje se pro všechny 4 možné směry pohybu.
+            // Updates the card position. If the actual position is not equal to the target position, the actual position is shifted by a bit
+            // closer to the target - first by the animation speed and then, when the card is already very close, only by a pixel to
+            // to the perfect match of both positions. It is repeated for all 4 possible directions of movement.
             if (Position.X > TargetPosition.X)
                 Position = new Point(Position.X - ((Position.X - TargetPosition.X > speed) ? speed : 1), Position.Y);
 
@@ -222,336 +224,336 @@ namespace UNO.Cards
             if (Position.Y < TargetPosition.Y)
                 Position = new Point(Position.X, Position.Y + ((TargetPosition.Y - Position.Y > speed) ? speed : 1));
 
-            // Vyřeší rotaci
-            // Má se karta vyrovnat?
+            // It solves rotation
+            // Should the card settle?
             if (settleRotation)
             {
-                // Je rotace větší jak cílový úhel?
+                // Is the rotation greater than the target angle?
                 if (Rotation > targetAngle)
                 {
                     Rotation -= (Math.Abs(Rotation-targetAngle) > 15) ? 15 : 1;
                 }
-                // Je rotace menší jak cílový úhel
+                // Is the rotation less than the target angle
                 else if (Rotation < targetAngle)
                 {
                     Rotation += (Math.Abs(Rotation-targetAngle) > 15) ? 15 : 1;
                 }
-                // Cílová a skutečná rotace se shodují, proces je u konce
+                // The target and actual rotation match, the process is over
                 else
                 {
                     settleRotation = false;
                 }
             }
 
-            // Vyřeší zoom animacu
+            // Fixes the zoom animation
             if (zoom)
             {
-                // Je zoom stále menší jak zoom maximum?
+                // Is the zoom still smaller than the zoom maximum?
                 if (zoomScale < zoomMaximum)
                 {
-                    // Přičte scale
+                    // Add scale
                     zoomScale += 2;
                 }
                 else
                 {
-                    // Dosaženo maxima
-                    // Ukončí zoom
+                    // Maximum reached
+                    // Exits zoom
                     zoom = false;
 
-                    // Obrátí zoom scale
+                    // Reverses the zoom scale
                     zoomScale = -zoomMaximum;
                 }
             }
         }
 
         /// <summary>
-        /// Vykreslovací metoda. Postará se o vykreslení kartičky na základě její hodnot.
+        /// Rendering method. It will take care of rendering the card based on its values.
         /// </summary>
         public void Draw(Graphics g)
         {
-            // Karta otočená bříškem dolů
+            // Card face down
             if (State == State.Back)
             {
-                // Odsazení bílého okraje
+                // White border offset
                 int borderPadding = 15;
 
-                // Posune počáteční vykreslovací pozici na střed karty
+                // Moves the initial rendering position to the center of the card
                 g.TranslateTransform(Position.X + (Dimensions.Width / 2), Position.Y + (Dimensions.Height / 2));
 
-                // Otočí vykreslovací plátno
+                // Rotates the canvas
                 g.RotateTransform(Rotation);
 
-                // Roztáhne vykreslovací plátno
+                // Expands the drawing canvas
                 g.ScaleTransform(flipX, 1);
 
-                // Zapne anti-aliasing
+                // Turns on anti-aliasing
                 g.SmoothingMode = SmoothingMode.AntiAlias;
 
-                // Playable border size - šířka efektu karty, když jde zahrát
+                // Playable border size - the width of the card's effect when it can be played
                 int pbs = 10;
 
-                // Můžeme kartu zahrát?
+                // Can we play the card?
                 if (Playable)
                 {
-                    // Vykreslí efekt kolem karty
+                    // Draws an effect around the card
                     using (LinearGradientBrush brush = new LinearGradientBrush(new Point(-(Dimensions.Width / 2) - pbs, -(Dimensions.Height / 2) - pbs), new Point(Dimensions.Width + (pbs * 2), Dimensions.Height + (pbs * 2)), Color.FromArgb(255, 217, 0), Color.FromArgb(231, 66, 0)))
                         g.FillPath(brush, Paint.RoundedRectangle(new Rectangle(-(Dimensions.Width / 2) - pbs, -(Dimensions.Height / 2) - pbs, Dimensions.Width + (pbs * 2), Dimensions.Height + (pbs * 2)), 10));
                 }
 
 
-                // Vykreslí obrys / stín karty
+                // Draws the outline / shadow of the card
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, Color.Black)))
                     g.FillPath(brush, Paint.RoundedRectangle(new Rectangle(-(Dimensions.Width / 2) - 1, -(Dimensions.Height / 2) - 1, Dimensions.Width + 2, Dimensions.Height + 2), 10));
 
-                // Býli okraj kolem karty
+                // There was a border around the card
                 g.FillPath(Brushes.White, Paint.RoundedRectangle(new Rectangle(-(Dimensions.Width / 2), -(Dimensions.Height / 2), Dimensions.Width, Dimensions.Height), 10));
 
-                // Barevná výplň
+                // Color fill
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
                     g.FillPath(brush, Paint.RoundedRectangle(new Rectangle(-(Dimensions.Width / 2) + borderPadding, -(Dimensions.Height / 2) + borderPadding, Dimensions.Width - (borderPadding * 2), Dimensions.Height - (borderPadding * 2)), 10));
 
-                // Rotace
+                // Rotation
                 g.RotateTransform(-45f);
 
-                // Vnitřní bílá elipsa
+                // Inner white ellipse
                 g.FillPath(Brushes.White, Paint.Ellipse(new Point(0, 0), 75, 105));
 
-                // Nastaví nazpátek scale pro správné vykreslní nápisu "UNO"
+                // Sets back the scale for the correct rendering of the inscription "UNO"
                 g.ScaleTransform(flipX, 1);
 
-                // Vytvoří formát řetězce pro psaní na střed
+                // Creates a string format to center
                 StringFormat format = new StringFormat();
                 format.LineAlignment = StringAlignment.Center;
                 format.Alignment = StringAlignment.Center;
 
-                // Zapne antialiasing textu
+                // Turns on text antialiasing
                 g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-                // Vykreslí UNO text
+                // Renders UNO text
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
                     g.DrawString("UNO", new Font("Segoe UI", 36, FontStyle.Bold), brush, new Point(), format);
 
-                // Vypne anti-aliasing
+                // Turns off anti-aliasing
                 g.SmoothingMode = SmoothingMode.Default;
 
-                //  Vyresetuje transformace
+                //  Resets the transformation
                 g.ResetTransform();
 
-                // Vykreslení je ukonce - vrátíme se
+                // Rendering is done - we'll be back
                 return;
             }
 
-            // Klasická karta
+            // Classic card
             if (Type == Type.Classic)
             {
-                // Býlý okraj kolem karty
+                // Former border around card
                 int borderPadding = 15;
 
-                // Posune počáteční vykreslovací pozici na střed karty
+                // Moves the initial rendering position to the center of the card
                 g.TranslateTransform(Position.X + (Dimensions.Width / 2), Position.Y + (Dimensions.Height / 2));
 
-                // Orotuje karty
+                // Rotates the cards
                 g.RotateTransform(Rotation);
 
-                // ROztáhne kartu
+                // He pulls out a card
                 g.ScaleTransform(flipX, 1);
 
-                // Vypne anti-aliasing
+                // Turns off anti-aliasing
                 g.SmoothingMode = SmoothingMode.AntiAlias;
 
-                // Playable border size - šířka efektu karty, když jde zahrát
+                // Playable border size - the width of the card's effect when it can be played
                 int pbs = 10;
 
-                // Můžeme kartu zahrát?
+                // Can we play the card?
                 if (Playable)
                 {
-                    // Vykreslí efekt kolem karty
+                    // Draws an effect around the card
                     using (LinearGradientBrush brush = new LinearGradientBrush(new Point(-(Dimensions.Width / 2) - pbs, -(Dimensions.Height / 2) - pbs), new Point(Dimensions.Width + (pbs * 2), Dimensions.Height + (pbs * 2)), Color.FromArgb(255, 217, 0), Color.FromArgb(231, 66, 0)))
                         g.FillPath(brush, Paint.RoundedRectangle(new Rectangle(-(Dimensions.Width / 2) - pbs, -(Dimensions.Height / 2) - pbs, Dimensions.Width + (pbs * 2), Dimensions.Height + (pbs * 2)), 10));
                 }
 
-                // Vykreslí stín / okraj kolem karty
+                // Draws a shadow / border around the card
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, Color.Black)))
                     g.FillPath(brush, Paint.RoundedRectangle(new Rectangle(-(Dimensions.Width / 2) - 1, -(Dimensions.Height / 2) - 1, Dimensions.Width + 2, Dimensions.Height + 2), 10));
 
-                // Vykreslí býlý okraj
+                // Draws a white border
                 g.FillPath(Brushes.White, Paint.RoundedRectangle(new Rectangle(-(Dimensions.Width / 2), -(Dimensions.Height / 2), Dimensions.Width, Dimensions.Height), 10));
 
-                // Barevná výplň
+                // Color fill
                 using (SolidBrush brush = new SolidBrush(Color))
                     g.FillPath(brush, Paint.RoundedRectangle(new Rectangle(-(Dimensions.Width / 2) + borderPadding, -(Dimensions.Height / 2) + borderPadding, Dimensions.Width - (borderPadding * 2), Dimensions.Height - (borderPadding * 2)), 10));
 
-                // Rotace pro vykreslení zkosené elipsy
+                // Color fill
                 g.RotateTransform(45f);
 
-                // Vykreslí elipsu
+                // Draws an ellipse
                 g.FillPath(Brushes.White, Paint.Ellipse(new Point(0, 0), 75, 105));
 
-                // Vytvoří formát řetězce pro psaní na střed
+                // Creates a string format to center
                 StringFormat format = new StringFormat();
                 format.LineAlignment = StringAlignment.Center;
                 format.Alignment = StringAlignment.Center;
 
-                // Zapne textový anti-aliasing
+                // Turns on text anti-aliasing
                 g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-                // Resetuje rotaci
+                // Resets rotation
                 g.RotateTransform(-45f);
 
-                // Vykreslí stín pod číslem karty
+                // Draws a shadow under the card number
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
                     g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
 
-                // Vykreslí číslo karty
+                // Renders the card number
                 using (SolidBrush brush = new SolidBrush(Color))
                     g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
 
-                // Vykreslí levé horní šíslo
+                // Draws the upper left digit
                 if (Number == 6)
                     g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
                 else
                     g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
-                
-                // Rotace vzůru nohama
+
+                // Spin upside down
                 g.RotateTransform(-180f);
 
-                // Vykreslí pravé dolní číslo
+                // Draws the lower right number
                 if (Number == 6)
                     g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
                 else
                     g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
 
-                // Vypne anti-aliasing
+                // Turns off anti-aliasing
                 g.SmoothingMode = SmoothingMode.Default;
 
-                // Resetuje transformace
+                // Resets the transformation
                 g.ResetTransform();
             }
         }
 
         /// <summary>
-        /// Animace otočení
+        /// Rotation animation
         /// </summary>
         public void Flip(bool skipAnimation = false)
         {
-            // Je karta bříškem dolů?
+            // Is the card face down?
             if (Flipped)
             {
-                // Započne animaci otočení bříškem vzůru
+                // Starts the model's tummy turning animation
                 flipUp = true;
 
-                // Přeskočí animaci, pokud je parameter metody na true
+                // Skips the animation if the method parameter is true
                 if (skipAnimation)
                 {
-                    // Zastaví průběh animace
+                    // Stops the progress of the animation
                     flipUp = false;
 
-                    // Aktualizuje stav karty na normální
+                    // Updates the card status to normal
                     State = State.Normal;
 
-                    // Nastaví horizontální scale karty na 1
+                    // Sets the horizontal scale of the cards to 1
                     flipX = 1;
 
-                    // Karta již není otočená bříškem dolů
+                    // The card is no longer face down
                     Flipped = false;
                 }
             }
             else
             {
-                // Karta není bříškem dolů
-                // Započne animaci otočení bříškem dolů
+                // The card is not face down
+                // Starts the belly-down animation
                 flipDown = true;
 
-                // Přeskočí animaci, pokud je parameter metody na true
+                // Skips the animation if the method parameter is true
                 if (skipAnimation)
                 {
-                    // Zastaví průběh animace
+                    // Stops the progress of the animation
                     flipDown = false;
 
-                    // Aktualizuje stav karty na otočenou směrem dolů
+                    // Updates the card state to face down
                     State = State.Back;
 
-                    // Nastaví horizontální scale karty na -1
+                    // Sets the horizontal scale of cards to -1
                     flipX = -1;
 
-                    // Karta již není otočená bříškem dolů
+                    // The card is no longer face down
                     Flipped = true;
                 }
             }
         }
 
         /// <summary>
-        /// Nastaví úhel karty s animací
+        /// Sets the angle of the animation card
         /// </summary>
         public void Settle(int angle)
         {
-            // AKtualizuje cílový úhel na předaný úhel
+            // Updates the target angle to the passed angle
             targetAngle = angle;
 
-            // Započne animaci otočení
+            // Starts the rotation animation
             settleRotation = true;
         }
 
         /// <summary>
-        /// Animace zvětšení. Spuštěna při líznutí nové karty
+        /// Zoom animation. Triggered when a new card is drawn
         /// </summary>
         public async void Zoom()
         {
-            // Chvíli počká - prodleva přidána, aby se animace spustila v momentně, kdy karta
-            // dorazí z hracího balíčku do ruky
+            // Waits a while - delay added to start the animation the moment the card
+            // arrives from the deck to the hand
             await Task.Delay(400);
 
-            // Spustí animaci zvětšení
+            // Starts the zoom animation
             zoom = true;
         }
 
         /// <summary>
-        /// Klik event karty
+        /// Click the event card
         /// </summary>
         public void MouseClick()
         {
-            // Může hráč hrát? Pokud ne, nemá smysl řešit jeho kliky
+            // Can the player play? If not, there's no point in addressing his cliques
             if (!Player.canPlay)
                 return;
 
-            // Je karta v hráčově ruce?
+            // Is the card in the player's hand?
             if (Player.hand.Contains(this))
             {
-                // Je karta hratelná?
+                // Is the card playable?
                 if (Playable)
                 {
-                    // Kartu lze zahrát
-                    // Removneme kartu z ruky
+                    // The card can be played
+                    // We remove the card from the hand
                     Player.hand.Remove(this);
 
-                    // Přidáme ji na hromádku zahraných karet
+                    // We add it to the pile of played cards
                     Pile.cards.Add(this);
 
-                    // Nastavíme náhodnou rotaci - jen pro efekt
+                    // We will set random rotation - just for effect
                     Settle(new Random().Next(-180, 180));
 
-                    // Refreshnem layout aby se vše posunulo na své nové místo
+                    // I will refresh the layout so that everything moves to its new place
                     Game.container.RefreshLayout();
                 }
                 else
                 {
-                    // Karta není hratelná - vrátíme se zpět a počkáme, až hráč zkusí kliknout na kartu, kterou lze zahrát
+                    // Card is not playable - we go back and wait until the player tries to click on a playable card
                     return;
                 }
             }
 
-            // Karta není v hráčově ruce.
-            // Je karta v hracím balíčku?
+            // The card is not in the player's hand.
+            // Is the card in the deck?
             if (Deck.cards.Contains(this))
             {
-                // Ano je - lízneme hráči jednu kartu
+                // Yes it is - we draw one card to the player
                 Player.Draw(1);
             }
 
-            // Vypne rámeček hratelnosti - aby dále nebyl vidět na hromádce odehraných karet
+            // Turns off the gameplay frame - so that it is no longer visible on the stack of played cards
             Playable = false;
 
-            // Updatuje kartu
+            // Updates the card
             Update();
 
             // End player's turn

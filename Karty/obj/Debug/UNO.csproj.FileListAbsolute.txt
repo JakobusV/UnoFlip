@@ -29,3 +29,14 @@ C:\Users\javanderniet\Documents\GitHub\UnoFlip\Karty\obj\Debug\UNO.csproj.Genera
 C:\Users\javanderniet\Documents\GitHub\UnoFlip\Karty\obj\Debug\UNO.csproj.CoreCompileInputs.cache
 C:\Users\javanderniet\Documents\GitHub\UnoFlip\Karty\obj\Debug\Karty.exe
 C:\Users\javanderniet\Documents\GitHub\UnoFlip\Karty\obj\Debug\Karty.pdb
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\bin\Debug\Karty.exe.config
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\bin\Debug\Karty.exe
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\bin\Debug\Karty.pdb
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\obj\Debug\UNO.csproj.AssemblyReference.cache
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\obj\Debug\UNO.csproj.SuggestedBindingRedirects.cache
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\obj\Debug\UNO.Game.resources
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\obj\Debug\Karty.Properties.Resources.resources
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\obj\Debug\UNO.csproj.GenerateResource.cache
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\obj\Debug\UNO.csproj.CoreCompileInputs.cache
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\obj\Debug\Karty.exe
+C:\Users\jwilliams\OneDrive\Documents\Y2 Neumont\Summer 2022 Y2\Projects In Exitisting Code\MainProj\UnoFlip\Karty\obj\Debug\Karty.pdb
