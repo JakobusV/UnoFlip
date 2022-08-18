@@ -380,3 +380,4 @@ InteropTests/NativeTests/out
 *.exe
 *.pdb
 *.cache
+.vs/Karty/v17/.suo
