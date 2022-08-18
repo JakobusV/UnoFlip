@@ -128,6 +128,12 @@ namespace UNO
             // Translation - Creates a random delay between 0.75 and 1.5 seconds to make it look like the enemy is "thinking" xD
             await Task.Delay(new Random().Next(750, 1500));
 
+            //Game over checkk
+            if (Game.gameOver)
+            {
+                Player.Play();
+                return;
+            }
             // Translation - Has a card been played? - has the game just started?
             if (Pile.cards.Count == 0)
             {

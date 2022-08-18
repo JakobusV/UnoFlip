@@ -16,6 +16,8 @@ namespace UNO
         /// Game container (form)
         /// </summary>
         public static Game container = null;
+        public static bool gameOver = false;   
+
 
         /// <summary>
         /// Constructor
@@ -71,6 +73,8 @@ namespace UNO
         /// </summary>
         private void Update(object sender, EventArgs e)
         {
+            checkWinner();
+           
             // Updates player
             Player.Update();
 
@@ -82,6 +86,8 @@ namespace UNO
 
             // Updates pile
             Pile.Update();
+
+            
 
             // Redraw whole scene
             Invalidate();
@@ -141,6 +147,33 @@ namespace UNO
         public void RefreshLayout()
         {
            OnResize(EventArgs.Empty);
+        }
+
+        //checking if either players cards are empmty if so, makes game over
+        public void checkWinner()
+        {
+            if (gameOver)
+            {
+                Player.canPlay = false;
+                return;
+            }
+            if(Player.hand.Count == 0)
+            {
+                gameOver = true;
+                Player.canPlay = false;
+                MessageBox.Show("Game Over. You Win!");
+            }
+            else if(Enemy.hand.Count == 0)
+            {
+                gameOver = true;
+                Player.canPlay=false;
+                MessageBox.Show("Game Over. Emeny Wins!");
+
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }

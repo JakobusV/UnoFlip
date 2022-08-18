@@ -559,8 +559,11 @@ namespace UNO.Cards
             // End player's turn
             Player.End();
 
-            // Pass turn to enemy
-            Enemy.Play();
+            if (!Game.gameOver)
+            {
+                // Pass turn to enemy
+                Enemy.Play();
+            }
         }
     }
 }
