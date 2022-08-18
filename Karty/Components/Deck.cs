@@ -13,25 +13,19 @@ namespace UNO
     /// </summary>
     class Deck
     {
-        /// <summary>
-        /// Translation - Red colour. Globally used for all red cards.
-        /// </summary>
-        public static Color red = Color.Red;
+        // Translation - Creates a new instance of the Random class.
+        static Random r = new Random();
 
         /// <summary>
-        /// Translation - Blue color. Globally used for all blue cards.
+        /// All light colors available in deck
         /// </summary>
-        public static Color blue = Color.Blue;
-
-        /// <summary>
-        /// Translation - Green color. Globally used for all green cards.
-        /// </summary>
-        public static Color green = Color.Green;
-
-        /// <summary>
-        /// Translation - Yellow. Globally used for all yellow cards.
-        /// </summary>
-        public static Color yellow = Color.Yellow;
+        public static List<Color> LightColors = new List<Color>() 
+        {
+            Color.Red, 
+            Color.Blue, 
+            Color.Green, 
+            Color.Yellow
+        };
 
         /// <summary>
         /// Translation - A collection of all the cards in the deck.
@@ -55,39 +49,48 @@ namespace UNO
             // Translation - Resets the card collection if it was previously filled
             cards.Clear();
 
-            // Translation - Creates a new instance of the Random class.
-            Random r = new Random();
+            // List of all possible colors
+            List<Color> colors = LightColors;
 
-            // Translation - The cycle repeats 108 times.
-            // According to the rules, the deck should contain exactly that many cards.
-            foreach (var i in Enumerable.Range(0, 108))
+            // Index used for setting card z index, also can be used for current card count.
+            int current_index = 0;
+
+            // Cycle through all possible colors
+            foreach (Color color in colors)
             {
-                // Translation - An array of all the possible colors a card can have.
-                // The auxiliary field serves us to easily generate random card colors.
-                Color[] colors = { red, blue, green, yellow };
-
-                // Translation - Creates a Card instance and chooses a random color and number from 0 to 7.
-                Card card = new Card(colors[r.Next(colors.Count())], r.Next(0, 7));
-
-                // Translation - Assigns a Z-Index to the card. This index tells us how close along the
-                // imaginary Z axis the card is towards the observer (player / user).
-                // The larger the Z-Index, the closer the card is to the observer.
-                // The Z-Index is important to know which card the user clicked on if there are multiple
-                // individual cards on top of each other - like in our game deck.
-                card.ZIndex = i;
-
-                // Translation - Turns all cards in the deck face down.
-                // The boolean parameter of the method ensures that the unwanted animation
-                // that would be seen at the start of the game is not performed.
-                card.Flip(true);
-
-                // Translation - Sets the rotation of the card from -180 to 180. Only a visual effect
-                // and a detail that does not affect the functionality of the game.
-                card.Rotation = r.Next(-180, 180);
-
-                // Translation - Finally, we add our card to the collection of all cards in the pack.
-                cards.Add(card);
+                // Cycle through 1 - 9
+                for (int i = 1; i < 10; i++)
+                {
+                    // Create two of each numbered card
+                    CreateCard(color, i, ref current_index);
+                    CreateCard(color, i, ref current_index);
+                }
             }
+        }
+
+        private static void CreateCard(Color color, int number, ref int index)
+        {
+            // Translation - Creates a Card instance and chooses a random color and number from 0 to 7.
+            Card card = new Card(color, number);
+
+            // Translation - Assigns a Z-Index to the card. This index tells us how close along the
+            // imaginary Z axis the card is towards the observer (player / user).
+            // The larger the Z-Index, the closer the card is to the observer.
+            // The Z-Index is important to know which card the user clicked on if there are multiple
+            // individual cards on top of each other - like in our game deck.
+            card.ZIndex = index;
+
+            // Translation - Turns all cards in the deck face down.
+            // The boolean parameter of the method ensures that the unwanted animation
+            // that would be seen at the start of the game is not performed.
+            card.Flip(true);
+
+            // Translation - Sets the rotation of the card from -180 to 180. Only a visual effect
+            // and a detail that does not affect the functionality of the game.
+            card.Rotation = r.Next(-180, 180);
+
+            // Translation - Finally, we add our card to the collection of all cards in the pack.
+            cards.Add(card);
         }
 
         /// <summary>
