@@ -37,7 +37,36 @@ namespace UNO
         /// </summary>
         public static void Shuffle()
         {
+            // Makes a duplicate of cards to keep track of unshuffled cards
+            List<Card> unshuffled = new List<Card>();
+            unshuffled.AddRange(cards);
 
+            // Card being transfered to new pile
+            Card focus_card = null;
+
+            // Index used for setting card z index, also can be used for current card count.
+            int current_index = 0;
+
+            // Reset the card collection
+            cards.Clear();
+
+            while(unshuffled.Count > 0)
+            {
+                // Get card to transfer
+                focus_card = unshuffled[r.Next(unshuffled.Count)];
+
+                // Set card to new Z index
+                focus_card.ZIndex = current_index;
+
+                // Add card to Deck
+                cards.Add(focus_card);
+
+                // Remove from unshuffled list
+                unshuffled.Remove(focus_card);
+                
+                // Increment for next index
+                current_index++;
+            }
         }
 
         /// <summary>
@@ -66,6 +95,9 @@ namespace UNO
                     CreateCard(color, i, ref current_index);
                 }
             }
+
+            // Shuffle new collection of cards
+            Shuffle();
         }
 
         private static void CreateCard(Color color, int number, ref int index)
