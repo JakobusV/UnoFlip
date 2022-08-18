@@ -16,22 +16,22 @@ namespace UNO
         /// <summary>
         /// Translation - Red colour. Globally used for all red cards.
         /// </summary>
-        public static Color red = Color.FromArgb(0, 57, 53);
+        public static Color red = Color.Red;
 
         /// <summary>
         /// Translation - Blue color. Globally used for all blue cards.
         /// </summary>
-        public static Color blue = Color.FromArgb(3, 151, 215);
+        public static Color blue = Color.Blue;
 
         /// <summary>
         /// Translation - Green color. Globally used for all green cards.
         /// </summary>
-        public static Color green = Color.FromArgb(3, 167, 81);
+        public static Color green = Color.Green;
 
         /// <summary>
         /// Translation - Yellow. Globally used for all yellow cards.
         /// </summary>
-        public static Color yellow = Color.FromArgb(252, 223, 20);
+        public static Color yellow = Color.Yellow;
 
         /// <summary>
         /// Translation - A collection of all the cards in the deck.
