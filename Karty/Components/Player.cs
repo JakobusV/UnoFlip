@@ -18,6 +18,7 @@ namespace UNO
         /// Translation - A collection of cards in a player's hand
         /// </summary>
         public static List<Card> hand = new List<Card>();
+        public static Color drawnCardColor = Color.White;
 
         /// <summary>
         /// Translation - True if it is the user's turn and can play
@@ -196,6 +197,7 @@ namespace UNO
 
                 // Translation - Adds a card to our hand
                 hand.Add(top);
+                drawnCardColor = top.Color;
 
                 // Translation - Updates the layout and sends all the cards to where they belong
                 Game.container.RefreshLayout();
