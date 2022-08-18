@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using UNO;
+using System.Collections.Generic;
 
 namespace UNO
 {
@@ -121,6 +122,8 @@ namespace UNO
 
             // Handles deck click actions
             Deck.Click(this);
+
+            Debug();
         }
 
         /// <summary>
@@ -174,6 +177,23 @@ namespace UNO
             {
                 return;
             }
+        }
+
+        private void Debug()
+        {
+            // Count of cards in Draw, Discard, Player, and Enemy
+            Console.WriteLine("Deck:" + Deck.cards.Count() + "\tPile:" + Pile.cards.Count() + "\tPlayer:" + Player.hand.Count() + "\tEnemy:" + Enemy.hand.Count());
+
+            // Gather all cards made, Count of card colors
+            List<Card> debug_cards = new List<Card>();
+            debug_cards.AddRange(Deck.cards);
+            debug_cards.AddRange(Pile.cards);
+            debug_cards.AddRange(Player.hand);
+            debug_cards.AddRange(Enemy.hand);
+            Console.WriteLine("Red:" + debug_cards.Where(c => c.Color == Color.Red).Count()
+                + "\tBlue:" + debug_cards.Where(c => c.Color == Color.Blue).Count()
+                + "\tGreen:" + debug_cards.Where(c => c.Color == Color.Green).Count()
+                + "\tYellow:" + debug_cards.Where(c => c.Color == Color.Yellow).Count());
         }
     }
 }
