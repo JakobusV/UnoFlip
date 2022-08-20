@@ -512,7 +512,7 @@ namespace UNO.Cards
         /// </summary>
         public void MouseClick()
         {
-            // Can the player play? If not, there's no point in addressing his cliques
+            // Can the player play? If not, there's no point in addressing his clicks
             if (!Player.canPlay)
                 return;
 

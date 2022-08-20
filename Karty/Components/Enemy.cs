@@ -20,6 +20,8 @@ namespace UNO
         /// </summary>
         public static List<Card> hand = new List<Card>();
 
+        public static Color drawnCardColor = Color.White;
+
         /// <summary>
         /// Translation - Update the enemy.
         /// </summary>
@@ -110,13 +112,15 @@ namespace UNO
 
                 // Translation - Adds a card to the enemy's hand.
                 hand.Add(top);
-
+                drawnCardColor = top.Color;
                 // Translation - Refresh layout causes that after removing a card from the collection of the playing deck
                 // and then adding it to the enemy's card collection will animate the transfer from the deck to the enemy's hand.
                 Game.container.RefreshLayout();
 
                 // Translation - Adds a delay so that the cards don't line up but nicely spaced out
                 await Task.Delay(350);
+
+                
             }
         }
 
