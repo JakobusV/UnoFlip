@@ -200,11 +200,10 @@ namespace UNO
             // Tranlsation - Creates a new dictionary that will contain the number of individual cards from each suit
             Dictionary<Color, int> balance = new Dictionary<Color, int>();
 
-            // Translation - Fills the dictionary
-            balance.Add(Deck.red, hand.Where(item => item.Color == Deck.red).Count());
-            balance.Add(Deck.blue, hand.Where(item => item.Color == Deck.blue).Count());
-            balance.Add(Deck.green, hand.Where(item => item.Color == Deck.green).Count());
-            balance.Add(Deck.yellow, hand.Where(item => item.Color == Deck.yellow).Count());
+            foreach (Color color in Deck.LightColors)
+            {
+                balance.Add(color, hand.Where(c => c.Color == color).Count());
+            }
 
             // Translation - Sorts the dictionary by the number of individual colors in descending order. This means that there will be such a color at the top,
             // from which we have the most cards.
