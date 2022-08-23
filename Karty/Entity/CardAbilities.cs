@@ -11,6 +11,9 @@ namespace Karty.Components
 {
     public class CardAbilities
     {
+        /// <summary>
+        /// Skips the next players turn (case 10 in Card.cs)
+        /// </summary>
         public void SkipAbility()
         {
             if (Player.canPlay)
@@ -22,11 +25,26 @@ namespace Karty.Components
                 Enemy.Play();
             }
         }
+
+        /// <summary>
+        /// Skips all players turn, the player that played the card gets to play again (case 11 in Card.cs)
+        /// </summary>
+        public void SkipAllAbility()
+        {
+
+        }
+
+        /// <summary>
+        /// Reverses play order (case 12 in Card.cs)
+        /// </summary>
         public void ReverseAbility()
         {
 
         }
 
+        /// <summary>
+        /// Next player draws 1 card (case 13 in Card.cs)
+        /// </summary>
         public void DrawOneAbility()
         {
             if (Player.canPlay)
@@ -40,6 +58,9 @@ namespace Karty.Components
             }
         }
 
+        /// <summary>
+        /// Next player draws 5 cards (case 14 in Card.cs)
+        /// </summary>
         public void DrawFiveAbility()
         {
             if (Player.canPlay)
@@ -53,16 +74,28 @@ namespace Karty.Components
             }
         }
 
+        /// <summary>
+        /// All card in both hands and deck become (case 15 in Card.cs)
+        /// </summary>
         public void FlipAbility()
         {
 
         }
 
+        /// <summary>
+        /// Lets player choose what color is the playable color (case 16 in Card.cs)
+        /// </summary>
+        /// <param name="color"></param>
         public void WildAbility(Color color)
         {
             Pile.cards[Pile.cards.Count - 1].Color = color;
         }
-        //Not quite sure if overrideing the Piles top cards color will break anything
+
+        /// <summary>
+        /// Lets player choose what color is the playable color & next player draws 2 cards (case 17 in Card.cs)
+        /// NOTE: Not quite sure if overrideing the Piles top cards color will break anything
+        /// </summary>
+        /// <param name="color"></param>
         public void WildDrawTwoAbility(Color color)
         {
             if (Player.canPlay)
@@ -76,10 +109,10 @@ namespace Karty.Components
                 Pile.cards[Pile.cards.Count - 1].Color = color;
             }
         }
-        /// <summary>
-        /// Who ever plays this card makes the other player draw until they reach specified color
-        /// </summary>
 
+        /// <summary>
+        /// Who ever plays this card makes the other player draw until they reach specified color (case 18 in Card.cs)
+        /// </summary>
         public void DrawUntilColorWild(Color color)
         {
             if (Player.canPlay)

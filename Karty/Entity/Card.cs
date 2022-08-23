@@ -400,28 +400,204 @@ namespace UNO.Cards
                 // Resets rotation
                 g.RotateTransform(-45f);
 
-                // Draws a shadow under the card number
-                using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
 
-                // Renders the card number
-                using (SolidBrush brush = new SolidBrush(Color))
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                // Draws a shadow under the MAIN card number
+                if (Number <= 9)
+                {
+                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                }
+
+                if (Number >= 10)
+                {
+                    switch (Number)
+                    {
+                        default:
+                            throw new Exception();
+                            break;
+                        case 10:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("⊘", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 11:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("↺", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 12:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("⇆", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 13:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("+1", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 14:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("+5", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 15:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("Flip", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 16:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("Wild", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 17:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("Wild +2", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 18:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("⇈", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                    }
+                }
+
+                // Renders the card MAIN number
+                if (Number <= 9)
+                {
+                    using (SolidBrush brush = new SolidBrush(Color))
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                }
+                
+                if (Number >= 10)
+                {
+                    switch (Number)
+                    {
+                        default:
+                            throw new Exception();
+                            break;
+                        case 10:
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawString("⊘", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                            break;
+                        case 11:
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawString("↺", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                            break;
+                        case 12:
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawString("⇆", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                            break;
+                        case 13:
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawString("+1", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                            break;
+                        case 14:
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawString("+5", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                            break;
+                        case 15:
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawString("Flip", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                            break;
+                        case 16:
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawString("Wild", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                            break;
+                        case 17:
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawString("Wild +2", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                            break;
+                        case 18:
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawString("⇈", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                            break;
+                            break;
+                    }
+                }
 
                 // Draws the upper left digit
-                if (Number == 6)
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
-                else
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
-
+                if (Number <= 9)
+                {
+                    if (Number == 6)
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
+                    else
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                } else if (Number >= 10){
+                    switch (Number)
+                    {
+                        default:
+                            throw new Exception();
+                            break;
+                        case 10:
+                            g.DrawString("⊘", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 11:
+                            g.DrawString("↺", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 12:
+                            g.DrawString("⇆", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 13:
+                            g.DrawString("+1", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 14:
+                            g.DrawString("+5", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 15:
+                            g.DrawString("Flip", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 16:
+                            g.DrawString("Wild", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 17:
+                            g.DrawString("Wild +2", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 18:
+                            g.DrawString("⇈", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                    }
+                }
+                
                 // Spin upside down
                 g.RotateTransform(-180f);
 
                 // Draws the lower right number
-                if (Number == 6)
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
-                else
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                if (Number <= 9)
+                {
+                    if (Number == 6)
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
+                    else
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                } else if (Number >= 10)
+                {
+                    switch (Number)
+                    {
+                        default:
+                            throw new Exception();
+                            break;
+                        case 10:
+                            g.DrawString("⊘", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 11:
+                            g.DrawString("↺", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 12:
+                            g.DrawString("⇆", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 13:
+                            g.DrawString("+1", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 14:
+                            g.DrawString("+5", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 15:
+                            g.DrawString("Flip", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 16:
+                            g.DrawString("Wild", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 17:
+                            g.DrawString("Wild +2", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 18:
+                            g.DrawString("🍒🥒", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                    }
+                }
+                
 
                 // Turns off anti-aliasing
                 g.SmoothingMode = SmoothingMode.Default;
