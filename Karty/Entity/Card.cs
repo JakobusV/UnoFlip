@@ -410,6 +410,7 @@ namespace UNO.Cards
 
                 if (Number >= 10)
                 {
+                    Console.WriteLine(Number);
                     switch (Number)
                     {
                         default:
@@ -593,7 +594,7 @@ namespace UNO.Cards
                             g.DrawString("Wild +2", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
                             break;
                         case 18:
-                            g.DrawString("🍒🥒", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            g.DrawString("⇈", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
                             break;
                     }
                 }
