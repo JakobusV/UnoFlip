@@ -88,7 +88,7 @@ namespace UNO
             foreach (Color color in colors)
             {
                 // Cycle through 1 - 9
-                for (int i = 1; i < 10; i++)
+                for (int i = 15; i < 19; i++)
                 {
                     // Create two of each numbered card
                     CreateCard(color, i, ref current_index);
