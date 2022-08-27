@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Karty.Components;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -11,7 +12,7 @@ namespace UNO.Cards
     /// Normal - the card is classically visible
     /// Back - the card is turned face down(only the back is visible)
     /// </summary>
-  
+
 
     public enum State
     {
@@ -400,7 +401,6 @@ namespace UNO.Cards
                 // Resets rotation
                 g.RotateTransform(-45f);
 
-
                 // Draws a shadow under the MAIN card number
                 if (Number <= 9)
                 {
@@ -444,7 +444,7 @@ namespace UNO.Cards
                         case 16:
                             Image wildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Wild_large.png");
                             using (SolidBrush brush = new SolidBrush(Color))
-                                g.DrawImage(wildImg, new PointF(-35, -55)); 
+                                g.DrawImage(wildImg, new PointF(-35, -55));
                             break;
                         case 17:
                             Image ptWildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\+2Wild_large.png");
@@ -473,7 +473,9 @@ namespace UNO.Cards
                         g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
                     else
                         g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
-                } else if (Number >= 10){
+                }
+                else if (Number >= 10)
+                {
                     switch (Number)
                     {
                         default:
@@ -500,11 +502,11 @@ namespace UNO.Cards
                             break;
                         case 16:
                             Image wildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Wild_small.png");
-                            g.DrawImage(wildImg, new PointF(-76, -105)); 
+                            g.DrawImage(wildImg, new PointF(-76, -105));
                             break;
                         case 17:
                             Image ptWildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\+2Wild.png");
-                                g.DrawImage(ptWildImg, new PointF(-76, -105)); 
+                            g.DrawImage(ptWildImg, new PointF(-76, -105));
                             break;
                         case 18:
                             Image untilImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\DrawUntil_small.png");
@@ -512,7 +514,7 @@ namespace UNO.Cards
                             break;
                     }
                 }
-                
+
                 // Spin upside down
                 g.RotateTransform(-180f);
 
@@ -523,7 +525,8 @@ namespace UNO.Cards
                         g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
                     else
                         g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
-                } else if (Number >= 10)
+                }
+                else if (Number >= 10)
                 {
                     switch (Number)
                     {
@@ -547,11 +550,11 @@ namespace UNO.Cards
                             break;
                         case 15:
                             Image flipImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Flip_small.png");
-                            g.DrawImage(flipImg, new PointF(-76, -105)); 
+                            g.DrawImage(flipImg, new PointF(-76, -105));
                             break;
                         case 16:
                             Image wildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Wild_small.png");
-                            g.DrawImage(wildImg, new PointF(-76, -105)); 
+                            g.DrawImage(wildImg, new PointF(-76, -105));
                             break;
                         case 17:
                             Image img = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\+2Wild.png");
@@ -563,8 +566,6 @@ namespace UNO.Cards
                             break;
                     }
                 }
-                
-
                 // Turns off anti-aliasing
                 g.SmoothingMode = SmoothingMode.Default;
 
@@ -654,8 +655,10 @@ namespace UNO.Cards
         /// </summary>
         public void MouseClick()
         {
+            bool playAgain = false;
+
             // Can the player play? If not, there's no point in addressing his clicks
-            if (!Player.canPlay)
+            if (!Player.canPlay || Game.gameOver)
                 return;
 
             // Is the card in the player's hand?
@@ -690,6 +693,14 @@ namespace UNO.Cards
             {
                 // Yes it is - we draw one card to the player
                 Player.Draw(1);
+
+                // End player's turn
+                Player.End();
+
+                // Pass turn to enemy
+                Enemy.Play();
+
+                return;
             }
 
             // Turns off the gameplay frame - so that it is no longer visible on the stack of played cards
@@ -698,11 +709,47 @@ namespace UNO.Cards
             // Updates the card
             Update();
 
-            // End player's turn
-            Player.End();
-
-            if (!Game.gameOver)
+            switch (this.Number)
             {
+                case 10:
+                    CardAbilities.SkipAbility();
+                    playAgain = true;
+                    break;
+                case 11:
+                    playAgain = true;
+                    break;
+                case 12:
+                    CardAbilities.ReverseAbility();
+                    break;
+                case 13:
+                    CardAbilities.DrawOneAbility();
+                    playAgain = true;
+                    break;
+                case 14:
+                    CardAbilities.DrawFiveAbility();
+                    playAgain = true;
+                    break;
+                case 15:
+                    CardAbilities.FlipAbility();
+                    break;
+                case 16:
+                    CardAbilities.WildAbility(Deck.LightColors[0]);
+                    break;
+                case 17:
+                    CardAbilities.WildDrawTwoAbility(Deck.LightColors[1]);
+                    playAgain = true;
+                    break;
+                case 18:
+                    CardAbilities.DrawUntilColorWild(Deck.LightColors[2]);
+                    playAgain = true;
+                    break;
+            }
+
+            if (!playAgain)
+            {
+                // End player's turn
+                Player.End();
+
                 // Pass turn to enemy
                 Enemy.Play();
             }
