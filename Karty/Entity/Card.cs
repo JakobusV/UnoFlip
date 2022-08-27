@@ -400,29 +400,171 @@ namespace UNO.Cards
                 // Resets rotation
                 g.RotateTransform(-45f);
 
-                // Draws a shadow under the card number
-                using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                // Draws a shadow under the MAIN card number
+                if (Number <= 9)
+                {
+                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                }
 
-                // Renders the card number
-                using (SolidBrush brush = new SolidBrush(Color))
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                if (Number >= 10)
+                {
+                    Console.WriteLine(Number);
+                    switch (Number)
+                    {
+                        default:
+                            throw new Exception();
+                            break;
+                        case 10:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("⊘", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 11:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("↺", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 12:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("⇆", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 13:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("+1", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 14:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("+5", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 15:
+                            Image flipImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Flip_large.png");
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawImage(flipImg, new PointF(-35, -35));
+                            break;
+                        case 16:
+                            Image wildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Wild_large.png");
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawImage(wildImg, new PointF(-35, -55));
+                            break;
+                        case 17:
+                            Image ptWildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\+2Wild_large.png");
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawImage(ptWildImg, new PointF(-35, -50));
+                            break;
+                        case 18:
+                            Image untilImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\DrawUntil_large.png");
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawImage(untilImg, new PointF(-35, -55));
+                            break;
+                    }
+                }
+
+                // Renders the card MAIN number
+                if (Number <= 9)
+                {
+                    using (SolidBrush brush = new SolidBrush(Color))
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                }
 
                 // Draws the upper left digit
-                if (Number == 6)
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
-                else
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                if (Number <= 9)
+                {
+                    if (Number == 6)
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
+                    else
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                }
+                else if (Number >= 10)
+                {
+                    switch (Number)
+                    {
+                        default:
+                            throw new Exception();
+                            break;
+                        case 10:
+                            g.DrawString("⊘", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 11:
+                            g.DrawString("↺", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 12:
+                            g.DrawString("⇆", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 13:
+                            g.DrawString("+1", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 14:
+                            g.DrawString("+5", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 15:
+                            Image flipImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Flip_small.png");
+                            g.DrawImage(flipImg, new PointF(-76, -105));
+                            break;
+                        case 16:
+                            Image wildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Wild_small.png");
+                            g.DrawImage(wildImg, new PointF(-76, -105));
+                            break;
+                        case 17:
+                            Image ptWildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\+2Wild.png");
+                            g.DrawImage(ptWildImg, new PointF(-76, -105));
+                            break;
+                        case 18:
+                            Image untilImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\DrawUntil_small.png");
+                            g.DrawImage(untilImg, new PointF(-76, -105));
+                            break;
+                    }
+                }
 
                 // Spin upside down
                 g.RotateTransform(-180f);
 
                 // Draws the lower right number
-                if (Number == 6)
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
-                else
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
-
+                if (Number <= 9)
+                {
+                    if (Number == 6)
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
+                    else
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                }
+                else if (Number >= 10)
+                {
+                    switch (Number)
+                    {
+                        default:
+                            throw new Exception();
+                            break;
+                        case 10:
+                            g.DrawString("⊘", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 11:
+                            g.DrawString("↺", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 12:
+                            g.DrawString("⇆", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 13:
+                            g.DrawString("+1", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 14:
+                            g.DrawString("+5", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 15:
+                            Image flipImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Flip_small.png");
+                            g.DrawImage(flipImg, new PointF(-76, -105));
+                            break;
+                        case 16:
+                            Image wildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Wild_small.png");
+                            g.DrawImage(wildImg, new PointF(-76, -105));
+                            break;
+                        case 17:
+                            Image img = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\+2Wild.png");
+                            g.DrawImage(img, new PointF(-76, -105));
+                            break;
+                        case 18:
+                            Image untilImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\DrawUntil_small.png");
+                            g.DrawImage(untilImg, new PointF(-76, -105));
+                            break;
+                    }
+                }
                 // Turns off anti-aliasing
                 g.SmoothingMode = SmoothingMode.Default;
 
