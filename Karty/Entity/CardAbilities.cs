@@ -11,7 +11,7 @@ namespace Karty.Components
 {
     public class CardAbilities
     {
-        public void SkipAbility()
+        public static void SkipAbility()
         {
             if (Player.canPlay)
             {
@@ -22,12 +22,12 @@ namespace Karty.Components
                 Enemy.Play();
             }
         }
-        public void ReverseAbility()
+        public static void ReverseAbility()
         {
 
         }
 
-        public void DrawOneAbility()
+        public static void DrawOneAbility()
         {
             if (Player.canPlay)
             {
@@ -40,7 +40,7 @@ namespace Karty.Components
             }
         }
 
-        public void DrawFiveAbility()
+        public static void DrawFiveAbility()
         {
             if (Player.canPlay)
             {
@@ -53,17 +53,17 @@ namespace Karty.Components
             }
         }
 
-        public void FlipAbility()
+        public static void FlipAbility()
         {
 
         }
 
-        public void WildAbility(Color color)
+        public static void WildAbility(Color color)
         {
             Pile.cards[Pile.cards.Count - 1].Color = color;
         }
         //Not quite sure if overrideing the Piles top cards color will break anything
-        public void WildDrawTwoAbility(Color color)
+        public static void WildDrawTwoAbility(Color color)
         {
             if (Player.canPlay)
             {
@@ -80,7 +80,7 @@ namespace Karty.Components
         /// Who ever plays this card makes the other player draw until they reach specified color
         /// </summary>
 
-        public void DrawUntilColorWild(Color color)
+        public static void DrawUntilColorWild(Color color)
         {
             if (Player.canPlay)
             {

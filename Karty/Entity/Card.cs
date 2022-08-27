@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Karty.Components;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -512,8 +513,10 @@ namespace UNO.Cards
         /// </summary>
         public void MouseClick()
         {
+            bool playAgain = false;
+
             // Can the player play? If not, there's no point in addressing his clicks
-            if (!Player.canPlay)
+            if (!Player.canPlay || Game.gameOver)
                 return;
 
             // Is the card in the player's hand?
@@ -548,6 +551,14 @@ namespace UNO.Cards
             {
                 // Yes it is - we draw one card to the player
                 Player.Draw(1);
+
+                // End player's turn
+                Player.End();
+
+                // Pass turn to enemy
+                Enemy.Play();
+
+                return;
             }
 
             // Turns off the gameplay frame - so that it is no longer visible on the stack of played cards
@@ -556,11 +567,47 @@ namespace UNO.Cards
             // Updates the card
             Update();
 
-            // End player's turn
-            Player.End();
-
-            if (!Game.gameOver)
+            switch (this.Number)
             {
+                case 10:
+                    CardAbilities.SkipAbility();
+                    playAgain = true;
+                    break;
+                case 11:
+                    playAgain = true;
+                    break;
+                case 12:
+                    CardAbilities.ReverseAbility();
+                    break;
+                case 13:
+                    CardAbilities.DrawOneAbility();
+                    playAgain = true;
+                    break;
+                case 14:
+                    CardAbilities.DrawFiveAbility();
+                    playAgain = true;
+                    break;
+                case 15:
+                    CardAbilities.FlipAbility();
+                    break;
+                case 16:
+                    CardAbilities.WildAbility(Deck.LightColors[0]);
+                    break;
+                case 17:
+                    CardAbilities.WildDrawTwoAbility(Deck.LightColors[1]);
+                    playAgain = true;
+                    break;
+                case 18:
+                    CardAbilities.DrawUntilColorWild(Deck.LightColors[2]);
+                    playAgain = true;
+                    break;
+            }
+
+            if (!playAgain)
+            {
+                // End player's turn
+                Player.End();
+
                 // Pass turn to enemy
                 Enemy.Play();
             }
