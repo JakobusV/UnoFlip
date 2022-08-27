@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,11 @@ namespace UNO.Components
 
             // Comparing numbers
             if (c1.Number == c2.Number)
+            {
+                return true;
+            }
+
+            if(c1.Color == Color.Black)
             {
                 return true;
             }
