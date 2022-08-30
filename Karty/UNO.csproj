@@ -91,7 +91,6 @@
     <Content Include="Images\+2Wild.png" />
     <Content Include="Images\+2Wild_large.png" />
     <Content Include="Images\DrawUntil_large.png" />
-    <Content Include="Images\DrawUntil_small.png" />
     <Content Include="Images\Flip_large.png" />
     <Content Include="Images\Flip_small.png" />
     <Content Include="Images\Wild_large.png" />
