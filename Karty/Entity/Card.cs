@@ -584,7 +584,7 @@ namespace UNO.Cards
                             g.DrawImage(flipImg, new PointF(-76, -105));
                             break;
                         case 16:
-                            Image wildImg = Image.FromFile("C:\\Users\\jwilliams\\OneDrive\\Documents\\Y2 Neumont\\Summer 2022 Y2\\Projects In Exitisting Code\\MainProj\\UnoFlip\\Karty\\Images\\Wild_small.png");
+                            Image wildImg = Image.FromFile(sFilePath);
                             g.DrawImage(wildImg, new PointF(-76, -105)); 
                             break;
                         case 17:
