@@ -26,7 +26,8 @@ namespace UNO
             Color.Red, 
             Color.Blue, 
             Color.Green, 
-            Color.Yellow
+            Color.Yellow,
+            Color.DarkGray
         };
 
         public static List<Color> FlipColors = new List<Color>()
@@ -34,7 +35,8 @@ namespace UNO
             Color.Orange,
             Color.Purple,
             Color.DeepPink,
-            Color.Cyan
+            Color.Cyan,
+            Color.LightGray
         };
 
         /// <summary>
@@ -106,6 +108,26 @@ namespace UNO
                     CreateCard(color, i, ref current_index, color_set);
                 }
                 color_set++;
+            }
+            //Creates all 4 NORMAL color wilds
+            for (int i = 0; i < 3; i++)
+            {
+                CreateCard(Color.DarkGray, 16, ref current_index, 4);
+            }
+            //Creates all 4 NORMAL color +2wilds
+            for (int i = 0; i < 3; i++)
+            {
+                CreateCard(Color.DarkGray, 17, ref current_index, 4);
+            }
+            //Creates all 4 FLIP color wilds
+            for (int i = 0; i < 3; i++)
+            {
+                CreateCard(Color.LightGray, 16, ref current_index, 4);
+            }
+            //Creates all 8 FLIP color DrawUntilWilds
+            for (int i = 0; i < 3; i++)
+            {
+                CreateCard(Color.LightGray, 18, ref current_index, 4);
             }
 
             // Shuffle new collection of cards
