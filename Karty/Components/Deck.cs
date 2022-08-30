@@ -16,6 +16,8 @@ namespace UNO
         // Translation - Creates a new instance of the Random class.
         static Random r = new Random();
 
+        public static bool isFlipped = false;
+
         /// <summary>
         /// All light colors available in deck
         /// </summary>
@@ -25,6 +27,14 @@ namespace UNO
             Color.Blue, 
             Color.Green, 
             Color.Yellow
+        };
+
+        public static List<Color> FlipColors = new List<Color>()
+        {
+            Color.Orange,
+            Color.Purple,
+            Color.Pink,
+            Color.Cyan
         };
 
         /// <summary>
@@ -84,23 +94,25 @@ namespace UNO
             // Index used for setting card z index, also can be used for current card count.
             int current_index = 0;
 
+            int color_set = 0;
             // Cycle through all possible colors
             foreach (Color color in colors)
             {
                 // Cycle through 1 - 9
-                for (int i = 1; i < 10; i++)
+                for (int i = 15; i < 17; i++)
                 {
                     // Create two of each numbered card
-                    CreateCard(color, i, ref current_index);
-                    CreateCard(color, i, ref current_index);
+                    CreateCard(color, i, ref current_index, color_set);
+                    CreateCard(color, i, ref current_index, color_set);
                 }
+                color_set++;
             }
 
             // Shuffle new collection of cards
             Shuffle();
         }
 
-        private static void CreateCard(Color color, int number, ref int index)
+        private static void CreateCard(Color color, int number, ref int index, int color_id)
         {
             // Translation - Creates a Card instance and chooses a random color and number from 0 to 7.
             Card card = new Card(color, number);
@@ -120,6 +132,8 @@ namespace UNO
             // Translation - Sets the rotation of the card from -180 to 180. Only a visual effect
             // and a detail that does not affect the functionality of the game.
             card.Rotation = r.Next(-180, 180);
+
+            card.ColorId = color_id;
 
             // Translation - Finally, we add our card to the collection of all cards in the pack.
             cards.Add(card);

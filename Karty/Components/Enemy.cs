@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Karty.Components;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace UNO
     /// Třída nepřítel. Řeší "umělou inteligenci" - AI nepřítele. Definuje pár základních
     /// metod pro umožnění jeho interakce s hráčem a tak dále.
     /// </summary>
-    class Enemy
+    public class Enemy
     {
         /// <summary>
         /// Translation - A collection of cards that the enemy holds in his hand.
@@ -143,6 +144,8 @@ namespace UNO
             {
                 // Translation - He plays the most expendable card in the suit
                 PlayCard(ChooseBestCard(hand));
+                Player.Play();
+                return;
             }
             else
             {
@@ -177,23 +180,100 @@ namespace UNO
                     //Translation - Does he have any choices? Can he play more than one card?
                     if (playable.Count == 1)
                     {
+                        Card c = playable[0];
+
+                        // Translation - Clears the collection of playable cards for further use
+                        playable.Clear();
+
                         // Tranlsation - He has no choice, so he plays the only card he can
-                        PlayCard(playable.First());
+                        PlayCard(c);
                     }
                     else
                     {
+                        Card c = ChooseBestCard(playable);
+
+                        // Translation - Clears the collection of playable cards for further use
+                        playable.Clear();
+
                         // Translation - The enemy has a choice (can play 2 or more cards)
                         // Translation - We pass a deck of playable cards to a method that decides which one is best to play.
-                        PlayCard(ChooseBestCard(playable));
+                        PlayCard(c);
                     }
                 }
 
-                // Translation - Clears the collection of playable cards for further use
-                playable.Clear();
+                // Translation - Gives the bike to the user
+                Player.Play();
             }
+        }
+        public static void Play(bool notFirst)
+        {
+            //Game over checkk
+            if (Game.gameOver)
+            {
+                Player.Play();
+                return;
+            }
+            // Translation - Has a card been played? - has the game just started?
+            if (Pile.cards.Count == 0)
+            {
+                // Translation - He plays the most expendable card in the suit
+                PlayCard(ChooseBestCard(hand));
+                return;
+            }
+            else
+            {
+                // Translation - A card has already been loaded
+                // Translation - He gets the last card played
+                Card lastPlayed = Pile.cards.Last();
 
-            // Translation - Gives the bike to the user
-            Player.Play();
+                // Translation - A list of all the cards the enemy could play - so far only his establishment
+                List<Card> playable = new List<Card>();
+
+                // Translation - Goes through all the cards in the enemy's hand
+                foreach (Card card in hand)
+                {
+                    // Translation - It will compare if the currently browsed card and the last played card are compatible with each other.
+                    // Transation - That is, if they can be played on top of each other.
+                    if (Helper.CompareCards(card, lastPlayed))
+                    {
+                        // Translation - The cards can be played on each other, we will add it to the collection of playable cards
+                        playable.Add(card);
+                    }
+                }
+
+                // Translation - Does the enemy have something to play? Do we have any cards in the playable card collection?
+                if (playable.Count == 0)
+                {
+                    // Translation - The enemy has nothing to play, so he licks
+                    Draw(1);
+                }
+                else
+                {
+                    // Translation - The enemy can play something.
+                    //Translation - Does he have any choices? Can he play more than one card?
+                    if (playable.Count == 1)
+                    {
+                        Card c = playable[0];
+
+                        // Translation - Clears the collection of playable cards for further use
+                        playable.Clear();
+
+                        // Tranlsation - He has no choice, so he plays the only card he can
+                        PlayCard(c);
+                    }
+                    else
+                    {
+                        Card c = ChooseBestCard(playable);
+
+                        // Translation - Clears the collection of playable cards for further use
+                        playable.Clear();
+
+                        // Translation - The enemy has a choice (can play 2 or more cards)
+                        // Translation - We pass a deck of playable cards to a method that decides which one is best to play.
+                        PlayCard(c);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -251,6 +331,42 @@ namespace UNO
 
             // Tranlsation - Aligns the entire playing field = moves the cards to where they belong based on their collections where they are placed.
             Game.container.RefreshLayout();
+
+            switch (card.Number)
+            {
+                case 10:
+                    CardAbilities.SkipAbility();
+                    Play(true);
+                    break;
+                case 11:
+                    Play(true);
+                    break;
+                case 12:
+                    CardAbilities.ReverseAbility();
+                    break;
+                case 13:
+                    CardAbilities.DrawOneAbility();
+                    Play(true);
+                    break;
+                case 14:
+                    CardAbilities.DrawFiveAbility();
+                    Play(true);
+                    break;
+                case 15:
+                    CardAbilities.FlipAbility();
+                    break;
+                case 16:
+                    CardAbilities.WildAbility(Deck.LightColors[0]);
+                    break;
+                case 17:
+                    CardAbilities.WildDrawTwoAbility(Deck.LightColors[1]);
+                    Play(true);
+                    break;
+                case 18:
+                    CardAbilities.DrawUntilColorWild(Deck.LightColors[2]);
+                    Play(true);
+                    break;
+            }
         }
     }
 }

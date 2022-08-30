@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Karty.Components;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.IO;
 using System.Threading.Tasks;
-
+ 
 namespace UNO.Cards
 {
     /// <summary>
@@ -47,6 +49,8 @@ namespace UNO.Cards
         /// Card color
         /// </summary>
         public Color Color { get; set; }
+
+        public int ColorId { get; set; }
 
         /// <summary>
         /// Card Number
@@ -271,6 +275,10 @@ namespace UNO.Cards
         /// </summary>
         public void Draw(Graphics g)
         {
+            string sCurrentD = "";
+            string sFile = "";
+            string sFilePath = "";
+
             // Card face down
             if (State == State.Back)
             {
@@ -400,29 +408,183 @@ namespace UNO.Cards
                 // Resets rotation
                 g.RotateTransform(-45f);
 
-                // Draws a shadow under the card number
-                using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                // Draws a shadow under the MAIN card number
+                if (Number <= 9)
+                {
+                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                }
 
-                // Renders the card number
-                using (SolidBrush brush = new SolidBrush(Color))
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                if (Number >= 10)
+                {
+                    Console.WriteLine(Number);
+                    switch (Number)
+                    {
+                        default:
+                            throw new Exception();
+                            break;
+                        case 10:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("⊘", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 11:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("↺", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 12:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("⇆", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 13:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("+1", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 14:
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                                g.DrawString("+5", new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(-3, -3), format);
+                            break;
+                        case 15:
+                            sCurrentD = AppDomain.CurrentDomain.BaseDirectory;
+                            sFile = System.IO.Path.Combine(sCurrentD, @"..\..\Images\Flip_large.png");
+                            sFilePath = Path.GetFullPath(sFile);
+                            Image flipImg = Image.FromFile(sFilePath);
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawImage(flipImg, new PointF(-35, -35));
+                            break;
+                        case 16:
+                            sCurrentD = AppDomain.CurrentDomain.BaseDirectory;
+                            sFile = System.IO.Path.Combine(sCurrentD, @"..\..\Images\Wild_large.png");
+                            sFilePath = Path.GetFullPath(sFile);
+                            Image wildImg = Image.FromFile(sFilePath);
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawImage(wildImg, new PointF(-35, -55));
+                            break;
+                        case 17:
+                            sCurrentD = AppDomain.CurrentDomain.BaseDirectory;
+                            sFile = System.IO.Path.Combine(sCurrentD, @"..\..\Images\+2Wild_large.png");
+                            sFilePath = Path.GetFullPath(sFile);
+                            Image ptWildImg = Image.FromFile(sFilePath);
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawImage(ptWildImg, new PointF(-35, -50));
+                            break;
+                        case 18:
+                            sCurrentD = AppDomain.CurrentDomain.BaseDirectory;
+                            sFile = System.IO.Path.Combine(sCurrentD, @"..\..\Images\DrawUntil_large.png");
+                            sFilePath = Path.GetFullPath(sFile);
+                            Image untilImg = Image.FromFile(sFilePath);
+                            using (SolidBrush brush = new SolidBrush(Color))
+                                g.DrawImage(untilImg, new PointF(-35, -55));
+                            break;
+                    }
+                }
+
+                // Renders the card MAIN number
+                if (Number <= 9)
+                {
+                    using (SolidBrush brush = new SolidBrush(Color))
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 76 - Math.Abs(zoomScale) + zoomMaximum, FontStyle.Bold | FontStyle.Italic), brush, new Point(), format);
+                }
 
                 // Draws the upper left digit
-                if (Number == 6)
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
-                else
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                if (Number <= 9)
+                {
+                    if (Number == 6)
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
+                    else
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                }
+                else if (Number >= 10)
+                {
+                    switch (Number)
+                    {
+                        default:
+                            throw new Exception();
+                            break;
+                        case 10:
+                            g.DrawString("⊘", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 11:
+                            g.DrawString("↺", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 12:
+                            g.DrawString("⇆", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 13:
+                            g.DrawString("+1", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 14:
+                            g.DrawString("+5", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 15:
+                            Image flipImg = Image.FromFile(sFilePath);
+                            g.DrawImage(flipImg, new PointF(-76, -105));
+                            break;
+                        case 16:
+                            Image wildImg = Image.FromFile(sFilePath);
+                            g.DrawImage(wildImg, new PointF(-76, -105));
+                            break;
+                        case 17:
+                            Image ptWildImg = Image.FromFile(sFilePath);
+                            g.DrawImage(ptWildImg, new PointF(-76, -105));
+                            break;
+                        case 18:
+                            Image untilImg = Image.FromFile(sFilePath);
+                            g.DrawImage(untilImg, new PointF(-76, -105));
+                            break;
+                    }
+                }
 
                 // Spin upside down
                 g.RotateTransform(-180f);
 
                 // Draws the lower right number
-                if (Number == 6)
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
-                else
-                    g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
-
+                if (Number <= 9)
+                {
+                    if (Number == 6)
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline), Brushes.White, new Point(-76, -105));
+                    else
+                        g.DrawString(Number.ToString(), new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                }
+                else if (Number >= 10)
+                {
+                    switch (Number)
+                    {
+                        default:
+                            throw new Exception();
+                            break;
+                        case 10:
+                            g.DrawString("⊘", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 11:
+                            g.DrawString("↺", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 12:
+                            g.DrawString("⇆", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 13:
+                            g.DrawString("+1", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 14:
+                            g.DrawString("+5", new Font("Segoe UI", 18, FontStyle.Bold | FontStyle.Italic), Brushes.White, new Point(-76, -105));
+                            break;
+                        case 15:
+                            Image flipImg = Image.FromFile(sFilePath);
+                            g.DrawImage(flipImg, new PointF(-76, -105));
+                            break;
+                        case 16:
+                            Image wildImg = Image.FromFile(sFilePath);
+                            g.DrawImage(wildImg, new PointF(-76, -105));
+                            break;
+                        case 17:
+                            Image img = Image.FromFile(sFilePath);
+                            g.DrawImage(img, new PointF(-76, -105));
+                            break;
+                        case 18:
+                            Image untilImg = Image.FromFile(sFilePath);
+                            g.DrawImage(untilImg, new PointF(-76, -105));
+                            break;
+                    }
+                }
                 // Turns off anti-aliasing
                 g.SmoothingMode = SmoothingMode.Default;
 
@@ -512,8 +674,10 @@ namespace UNO.Cards
         /// </summary>
         public void MouseClick()
         {
+            bool playAgain = false;
+
             // Can the player play? If not, there's no point in addressing his clicks
-            if (!Player.canPlay)
+            if (!Player.canPlay || Game.gameOver)
                 return;
 
             // Is the card in the player's hand?
@@ -548,6 +712,14 @@ namespace UNO.Cards
             {
                 // Yes it is - we draw one card to the player
                 Player.Draw(1);
+
+                // End player's turn
+                Player.End();
+
+                // Pass turn to enemy
+                Enemy.Play();
+
+                return;
             }
 
             // Turns off the gameplay frame - so that it is no longer visible on the stack of played cards
@@ -556,13 +728,97 @@ namespace UNO.Cards
             // Updates the card
             Update();
 
-            // End player's turn
-            Player.End();
-
-            if (!Game.gameOver)
+            switch (this.Number)
             {
+                case 10:
+                    CardAbilities.SkipAbility();
+                    playAgain = true;
+                    break;
+                case 11:
+                    playAgain = true;
+                    break;
+                case 12:
+                    CardAbilities.ReverseAbility();
+                    break;
+                case 13:
+                    CardAbilities.DrawOneAbility();
+                    playAgain = true;
+                    break;
+                case 14:
+                    CardAbilities.DrawFiveAbility();
+                    playAgain = true;
+                    break;
+                case 15:
+                    CardAbilities.FlipAbility();
+                    break;
+                case 16:
+                    CardAbilities.WildAbility(Deck.LightColors[0]);
+                    break;
+                case 17:
+                    CardAbilities.WildDrawTwoAbility(Deck.LightColors[1]);
+                    playAgain = true;
+                    break;
+                case 18:
+                    CardAbilities.DrawUntilColorWild(Deck.LightColors[2]);
+                    playAgain = true;
+                    break;
+            }
+
+            if (!playAgain)
+            {
+                // End player's turn
+                Player.End();
+
                 // Pass turn to enemy
                 Enemy.Play();
+            }
+        }
+
+        public void UnoFlip()
+        {
+            if (Deck.isFlipped)
+            {
+                Color = Deck.LightColors[ColorId];
+
+                switch (Number)
+                {
+                    case 11:
+                        Number = 10;
+                        break;
+                    case 12:
+                        Number = 12;
+                        break;
+                    case 14:
+                        Number = 13;
+                        break;
+                    case 18:
+                        Number = 17;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                Color = Deck.FlipColors[ColorId];
+
+                switch (Number)
+                {
+                    case 10:
+                        Number = 11;
+                        break;
+                    case 12:
+                        Number = 12;
+                        break;
+                    case 13:
+                        Number = 14;
+                        break;
+                    case 17:
+                        Number = 18;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
