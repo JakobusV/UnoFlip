@@ -69,6 +69,8 @@ namespace UNO
             // Předá kolo hráči
             Player.Play();
 
+            WildSelector.g = CreateGraphics();
+
             container.KeyPress += Window_KeyPress;
         }
 
@@ -91,7 +93,7 @@ namespace UNO
             // Updates pile
             Pile.Update();
 
-            WildSelector.DrawSelector(CreateGraphics());
+            WildSelector.DrawSelector();
 
             // Redraw whole scene
             Invalidate();
@@ -99,7 +101,6 @@ namespace UNO
 
         private void Window_KeyPress(object sender, KeyPressEventArgs e)
         {
-            Console.WriteLine("HELO MOTHER FUCKER");
             switch (e.KeyChar)
             {
                 case (char)Keys.D1:
@@ -114,7 +115,11 @@ namespace UNO
                 case (char)Keys.D4:
                     WildSelector.PickColor(4);
                     break;
+                default:
+                    break;
             }
+
+            WildSelector.DrawSelector();
         }
 
         /// <summary>

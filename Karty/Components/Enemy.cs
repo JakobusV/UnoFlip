@@ -356,14 +356,14 @@ namespace UNO
                     CardAbilities.FlipAbility();
                     break;
                 case 16:
-                    CardAbilities.WildAbility(Deck.LightColors[0]);
+                    CardAbilities.WildAbility(hand.First().Color);
                     break;
                 case 17:
-                    CardAbilities.WildDrawTwoAbility(Deck.LightColors[1]);
+                    CardAbilities.WildDrawTwoAbility(hand.First().Color);
                     Play(true);
                     break;
                 case 18:
-                    CardAbilities.DrawUntilColorWild(Deck.LightColors[2]);
+                    CardAbilities.DrawUntilColorWild(hand.First().Color);
                     Play(true);
                     break;
             }

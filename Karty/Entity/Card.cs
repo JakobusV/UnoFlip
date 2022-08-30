@@ -752,14 +752,14 @@ namespace UNO.Cards
                     CardAbilities.FlipAbility();
                     break;
                 case 16:
-                    CardAbilities.WildAbility(Deck.LightColors[0]);
+                    CardAbilities.WildAbility(WildSelector.Color);
                     break;
                 case 17:
-                    CardAbilities.WildDrawTwoAbility(Deck.LightColors[1]);
+                    CardAbilities.WildDrawTwoAbility(WildSelector.Color);
                     playAgain = true;
                     break;
                 case 18:
-                    CardAbilities.DrawUntilColorWild(Deck.LightColors[2]);
+                    CardAbilities.DrawUntilColorWild(WildSelector.Color);
                     playAgain = true;
                     break;
             }

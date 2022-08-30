@@ -13,6 +13,7 @@ namespace Karty.Components
     {
         public static int ColorId = 0;
         public static Color Color = Color.Red;
+        public static Graphics g;
 
         public static Color PickColor(int number)
         {
@@ -49,7 +50,7 @@ namespace Karty.Components
                           radius + radius, radius + radius);
         }
 
-        public static void DrawSelector(Graphics g)
+        public static void DrawSelector()
         {
             FillCircle(g, new SolidBrush(Color), 50, 50, 15);
         }

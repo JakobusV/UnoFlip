@@ -92,6 +92,8 @@ namespace Karty.Components
             }
 
             Deck.isFlipped = !Deck.isFlipped;
+
+            WildSelector.DrawSelector();
         }
 
         /// <summary>
