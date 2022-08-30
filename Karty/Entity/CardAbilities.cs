@@ -79,7 +79,19 @@ namespace Karty.Components
         /// </summary>
         public static void FlipAbility()
         {
+            List<Card> allCards = new List<Card>();
 
+            allCards.AddRange(Deck.cards);
+            allCards.AddRange(Pile.cards);
+            allCards.AddRange(Player.hand);
+            allCards.AddRange(Enemy.hand);
+
+            foreach (Card card in allCards)
+            {
+                card.UnoFlip();
+            }
+
+            Deck.isFlipped = !Deck.isFlipped;
         }
 
         /// <summary>
