@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\WildSelector.cs" />
     <Compile Include="Entity\CardAbilities.cs" />
     <Compile Include="Components\Helper.cs" />
     <Compile Include="Entity\Card.cs" />

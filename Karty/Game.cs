@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using UNO;
 using System.Collections.Generic;
+using Karty.Components;
 
 namespace UNO
 {
@@ -67,6 +68,8 @@ namespace UNO
 
             // Předá kolo hráči
             Player.Play();
+
+            container.KeyPress += Window_KeyPress;
         }
 
         /// <summary>
@@ -88,10 +91,30 @@ namespace UNO
             // Updates pile
             Pile.Update();
 
-            
+            WildSelector.DrawSelector(CreateGraphics());
 
             // Redraw whole scene
             Invalidate();
+        }
+
+        private void Window_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Console.WriteLine("HELO MOTHER FUCKER");
+            switch (e.KeyChar)
+            {
+                case (char)Keys.D1:
+                    WildSelector.PickColor(1);
+                    break;
+                case (char)Keys.D2:
+                    WildSelector.PickColor(2);
+                    break;
+                case (char)Keys.D3:
+                    WildSelector.PickColor(3);
+                    break;
+                case (char)Keys.D4:
+                    WildSelector.PickColor(4);
+                    break;
+            }
         }
 
         /// <summary>
