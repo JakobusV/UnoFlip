@@ -12,7 +12,7 @@ namespace UNO
     /// <summary>
     /// Translation - Player class. It procures his cards in hand, handles his events like mouse clicks and so on
     /// </summary>
-    class Player
+    public class Player
     {
         /// <summary>
         /// Translation - A collection of cards in a player's hand
