@@ -30,7 +30,12 @@ namespace UNO.Components
                 return true;
             }
 
-            if(c1.Color == Color.Black)
+            if(c1.Color == Color.LightGray)
+            {
+                return true;
+            }
+
+            if (c1.Color == Color.DarkGray)
             {
                 return true;
             }
