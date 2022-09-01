@@ -12,7 +12,7 @@ namespace UNO
     /// <summary>
     /// T - The pile of last played cards.
     /// </summary>
-    class Pile
+    public class Pile
     {
         /// <summary>
         /// T - Collection of last played cards.

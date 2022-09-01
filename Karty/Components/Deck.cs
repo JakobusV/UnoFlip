@@ -26,7 +26,8 @@ namespace UNO
             Color.Red, 
             Color.Blue, 
             Color.Green, 
-            Color.Yellow
+            Color.Yellow,
+            Color.LightGray
         };
 
         public static List<Color> FlipColors = new List<Color>()
@@ -34,7 +35,8 @@ namespace UNO
             Color.Orange,
             Color.Purple,
             Color.Pink,
-            Color.Cyan
+            Color.Cyan,
+            Color.DarkGray
         };
 
         /// <summary>
@@ -98,13 +100,30 @@ namespace UNO
             // Cycle through all possible colors
             foreach (Color color in colors)
             {
-                // Cycle through 1 - 9
-                for (int i = 15; i < 17; i++)
+                if (color_set != 4)
                 {
-                    // Create two of each numbered card
-                    CreateCard(color, i, ref current_index, color_set);
-                    CreateCard(color, i, ref current_index, color_set);
+                    // Cycle through 1 - 9
+                    for (int i = 1; i < 10; i++)
+                    {
+                        // Create two of each numbered card
+                        CreateCard(color, i, ref current_index, color_set);
+                        CreateCard(color, i, ref current_index, color_set);
+                    }
+
+                    foreach (var cardNumber in new int[] {10, 12, 13})
+                    {
+                        CreateCard(color, cardNumber, ref current_index, color_set);
+                        CreateCard(color, cardNumber, ref current_index, color_set);
+                    }
+                }else
+                {
+                    CreateCard(color, 16, ref current_index, color_set);
+                    CreateCard(color, 16, ref current_index, color_set);
+
+                    CreateCard(color, 17, ref current_index, color_set);
+                    CreateCard(color, 17, ref current_index, color_set);
                 }
+
                 color_set++;
             }
 
