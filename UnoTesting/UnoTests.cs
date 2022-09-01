@@ -22,6 +22,20 @@ namespace UnoTesting
         }
 
         [TestMethod]
+        public void IsFlippedTest()
+        {
+            Deck.isFlipped = true;
+            if (Deck.isFlipped)
+            {
+                
+            }
+            else
+            {
+
+            }
+        }
+
+        [TestMethod]
         public void ColorPickerTest1()
         {
             var color = WildSelector.PickColor(69);
@@ -148,6 +162,30 @@ namespace UnoTesting
             {
                 Assert.IsTrue(color.IsKnownColor);
             }
+        }
+
+        [TestMethod]
+        public void WildDraw2Card()
+        {
+            Deck.Create();
+
+            Pile.cards = new List<Card>() { new Card(Color.Blue, 10) };
+
+            CardAbilities.WildDrawTwoAbility(Color.Red);
+
+            Assert.IsTrue(Pile.cards[Pile.cards.Count - 1].Color == Color.Red);
+        }
+
+        [TestMethod]
+        public void WildCard()
+        {
+            Deck.Create();
+
+            Pile.cards = new List<Card>() { new Card(Color.Blue, 10) };
+
+            CardAbilities.WildAbility(Color.Red);
+
+            Assert.IsTrue(Pile.cards[Pile.cards.Count - 1].Color == Color.Red);
         }
     }
 }
