@@ -3,6 +3,8 @@ using UNO;
 using System;
 using Karty.Components;
 using System.Drawing;
+using UNO.Cards;
+using System.Collections.Generic;
 
 namespace UnoTesting
 {
@@ -14,11 +16,9 @@ namespace UnoTesting
         public void GenerateDeckTest()
         {
             Deck.Create();
-
-            var cards1 = Deck.cards;
+            Card topCard = Deck.cards[0];
             Deck.Shuffle();
-            var cards2 = Deck.cards;
-            Assert.AreNotEqual(cards1, cards2);
+            Assert.AreNotEqual(topCard, Deck.cards[0]);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace UnoTesting
         public void ColorPickerTest2()
         {
             var color = WildSelector.PickColor(1);
-            if(color != Color.Red)
+            if (color != Color.Red)
             {
                 Assert.Fail();
             }
@@ -148,96 +148,6 @@ namespace UnoTesting
             {
                 Assert.IsTrue(color.IsKnownColor);
             }
-        }
-
-        [TestMethod]
-        public void PlayerWinTest()
-        {
-
-        }
-        [TestMethod]
-        public void ShuffleCardsTest()
-        {
-            
-        }
-        [TestMethod]
-        public void CreateGameTest()
-        {
-            
-        }
-        [TestMethod]
-        public void mouseClickTestTest()
-        {
-            
-        }
-        [TestMethod]
-        public void SkipTest()
-        {
-            /*var expexted = Player.canPlay;
-            var actual = !Player.canPlay;
-            Assert.AreNotEqual(expexted, actual);*/
-            
-        }
-        [TestMethod]
-        public void reverseTest()
-        {
-            
-        }
-        [TestMethod]
-        public void skipAllTest()
-        {
-            
-        }
-        [TestMethod]
-        public void flipTest()
-        {
-            
-        }
-        [TestMethod]
-        public void plusOneTest()
-        {
-            var expexted = Player.hand.Count == 8;
-            var actual = Player.hand.Count;
-            Player.Draw(1);
-            CardAbilities.DrawOneAbility();
-            Assert.AreEqual(expexted, actual);
-        }
-        [TestMethod]
-        public void plusFiveTest()
-        {
-            var expexted = Player.hand.Count == 12;
-            var actual = Player.hand.Count;
-            Player.Draw(5);
-            CardAbilities.DrawOneAbility();
-            Assert.AreEqual(expexted, actual);
-        }
-        [TestMethod]
-        public void wildTest()
-        {            
-            CardAbilities.WildAbility(Color.Red);
-            var expected = Color.Red;
-            var actual = Pile.cards[Pile.cards.Count - 1].Color;
-            Assert.AreEqual(expected, actual);
-        }
-        [TestMethod]
-        public void wildDrawTwoTest()
-        {
-            var expectedHand = Player.hand.Count == 9;
-            Player.Draw(2);
-            var actualHand = Player.hand.Count;
-            CardAbilities.WildDrawTwoAbility(Color.Red);
-            var expectedColor = Color.Red;
-            var actualColor = Pile.cards[Pile.cards.Count - 1].Color;
-            Assert.AreEqual(expectedHand, actualHand);
-            Assert.AreEqual(expectedColor, actualColor);
-        }
-        [TestMethod]
-        public void wildDrawTillMatchTest()
-        {
-            CardAbilities.WildAbility(Color.Red);
-            var expected = Color.Red;
-            var actual = Pile.cards[Pile.cards.Count - 1].Color;
-            Assert.AreEqual(expected, actual);
         }
     }
 }

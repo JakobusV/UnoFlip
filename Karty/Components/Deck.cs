@@ -11,7 +11,7 @@ namespace UNO
     /// Translation - Game pack. The package methods are static because I don't expect there to be multiple instances
     /// of the game package in the game = there is always only one game package.
     /// </summary>
-    class Deck
+    public class Deck
     {
         // Translation - Creates a new instance of the Random class.
         static Random r = new Random();
